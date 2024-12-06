@@ -154,18 +154,17 @@ onUnmounted(() => {
     <section class="about-us full-page" ref="aboutUsRef">
       <p class="title-test" ref="titleAboutUsRef">Sobre nosotros</p>
       <p class="bottom-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam
+        ¡Eric y Carlos! Dos amantes de la cocia con una larga y remarcable
+        carrera creativa nos juntamos con la misión de ofrecer el mayor disfrute
+        de sabor y experiencia
       </p>
     </section>
 
     <section class="history full-page" ref="historyRef">
       <p class="title-test" ref="titleHistoryRef">Historia</p>
       <p class="bottom-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam
+        ¿El único local disponible es un garaje? ¡No se hable más! Asi nace
+        nuestro proyecto diferenciando nuestra cocina y local
       </p>
     </section>
 
@@ -206,6 +205,11 @@ onUnmounted(() => {
 
     <section class="make-reservation full-page" ref="reservationRef">
       <p class="title-test" ref="titleReservationRef">Reservar</p>
+      <iframe
+        src="https://widget.thefork.com/ea84edc5-731d-4fa2-bfa1-0861d546538b"
+        allow="payment *"
+        style="width: 100%; min-height: 800px; border: none; overflow: scroll"
+      ></iframe>
     </section>
   </div>
 </template>
