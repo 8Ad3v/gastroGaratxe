@@ -187,23 +187,8 @@ onUnmounted(() => {
       ref="foodMenuRef"
     >
       <p class="title-test" ref="titleMenuRef">Menu</p>
-      <div
-        class="menu-images"
-        style="position: relative; /* right: 0; */ margin: -5%; right: 0"
-      >
-        <div
-          style="
-            position: absolute;
-            width: 90vw;
-            right: 0;
-            height: 80%;
-            padding-top: 5%;
-            padding-bottom: 5%;
-            padding-left: 5%;
-          "
-        >
-          <Carousel />
-        </div>
+      <div class="menu-images" style="position: relative; /* right: 0; */">
+        <Carousel />
       </div>
       <p style="color: white; font-size: 10vw">11 pasos</p>
     </section>

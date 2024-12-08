@@ -1,72 +1,4 @@
 <!-- <template>
-  <div class="carousel-container">
-    <div class="carousel-track" :style="trackStyle">
-      <div v-for="(image, index) in images" :key="index" class="carousel-slide">
-        <img :src="image.url" :alt="'Image ' + (index + 1)" />
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { ref, computed } from "vue";
-
-const images = ref([
-  { id: 1, url: "/src/assets/food/food1.jpeg" },
-  { id: 2, url: "/src/assets/food/food2.jpeg" },
-  { id: 3, url: "/src/assets/food/food3.jpeg" },
-  { id: 4, url: "/src/assets/food/food4.jpeg" },
-  { id: 5, url: "/src/assets/food/food5.jpeg" },
-]);
-
-const slideWidth = 100 / images.value.length; // Ajustar el ancho de cada slide según el número de imágenes
-const gap = 16; // Tamaño del margen entre imágenes en píxeles
-
-// Estilo dinámico del track para la animación infinita
-const trackStyle = computed(() => ({
-  width: `${images.value.length * 2 * (slideWidth + gap / window.innerWidth)}%`,
-}));
-</script>
-
-<style scoped lang="scss">
-.carousel-container {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-  height: 100%; /* Hace que el contenedor tenga el tamaño completo de su contenedor padre */
-}
-
-.carousel-track {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  animation: slide 20s linear infinite;
-}
-
-.carousel-slide {
-  flex: 0 0 calc(100% / 5 - 16px); /* Ajustar el ancho según la cantidad de imágenes */
-  margin-right: 16px; /* Margen entre las imágenes */
-  height: 100%; /* Asegura que cada slide ocupe toda la altura del contenedor */
-}
-
-.carousel-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ajustar las imágenes al tamaño del contenedor sin deformarlas */
-  display: block;
-}
-
-@keyframes slide {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%); /* Mueve el track un 50% para hacer bucle */
-  }
-}
-</style> -->
-
-<template>
   <section style="height: 100%">
     <article :class="{ paused: isPaused }" style="height: 100%">
       <div style="height: 100%">
@@ -143,5 +75,158 @@ li {
   100% {
     transform: translateX(-50%);
   }
+}
+</style> -->
+<template>
+  <section class="slide-option" style="overflow: hidden">
+    <div class="container">
+      <h3 class="no-marg">closed infinite loop</h3>
+    </div>
+    <div id="infinite" class="highway-slider">
+      <div class="container highway-barrier">
+        <ul class="highway-lane">
+          <li class="highway-car">
+            <img src="/src/assets/food/food1.jpeg" class="slider-img" />
+          </li>
+          <li class="highway-car">
+            <img src="/src/assets/food/food2.jpeg" class="slider-img" />
+          </li>
+          <li class="highway-car">
+            <img src="/src/assets/food/food3.jpeg" class="slider-img" />
+          </li>
+          <li class="highway-car">
+            <img src="/src/assets/food/food4.jpeg" class="slider-img" />
+          </li>
+          <li class="highway-car">
+            <img src="/src/assets/food/food1.jpeg" class="slider-img" />
+          </li>
+          <li class="highway-car">
+            <img src="/src/assets/food/food2.jpeg" class="slider-img" />
+          </li>
+          <li class="highway-car">
+            <img src="/src/assets/food/food3.jpeg" class="slider-img" />
+          </li>
+          <li class="highway-car">
+            <img src="/src/assets/food/food4.jpeg" class="slider-img" />
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</template>
+<style>
+section.slide-option {
+  overflow: hidden;
+  margin: 0 0 50px 0;
+  .no-marg {
+    margin: 0 0 0 0;
+  }
+  height: 100%;
+}
+
+div.highway-slider {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  div.highway-barrier {
+    overflow: hidden;
+    position: relative;
+  }
+  ul.highway-lane {
+    display: flex;
+    height: 100%;
+    li.highway-car {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      justify-content: center;
+      align-items: center;
+      color: #343434;
+    }
+  }
+}
+.slider-img {
+  margin-left: 70px;
+  position: absolute; /* Asegura que la imagen sea manejable dentro del contenedor */
+  top: 50%; /* Centra verticalmente la imagen */
+  left: 50%; /* Centra horizontalmente la imagen */
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho */
+  height: 100%; /* Asegura que la imagen ocupe todo el alto */
+  object-fit: cover; /* Ajusta la imagen con zoom, recortando las partes necesarias */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Centra la imagen desde su punto central */
+}
+@keyframes translatestf {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-500%);
+  }
+}
+#stffull div.highway-barrier {
+  ul.highway-lane {
+    width: 500%;
+    li.highway-car {
+      animation: translatestf 30s linear infinite;
+      h4 {
+        font-size: 28px;
+      }
+    }
+  }
+}
+
+@keyframes translateinfinite {
+  100% {
+    transform: translateX(calc(-180px * 12));
+  }
+}
+#infinite div.highway-barrier {
+  &::before,
+  &::after {
+    content: " ";
+    position: absolute;
+    z-index: 9;
+    width: 180px;
+    height: 100%;
+  }
+  &::before {
+    top: 0;
+    left: 0;
+  }
+  &::after {
+    top: 0;
+    right: 0;
+  }
+  ul.highway-lane {
+    width: calc(180px * 24);
+    li.highway-car {
+      width: 180px;
+      animation: translateinfinite 25s linear infinite;
+      span.fab {
+        font-size: 65px;
+      }
+    }
+  }
+}
+
+#red {
+  background: #cb5454;
+}
+#orange {
+  background: #cb8054;
+}
+#yellow {
+  background: #cbba54;
+}
+#green {
+  background: #69b46e;
+}
+#blue {
+  background: #6091b0;
 }
 </style>
