@@ -195,12 +195,8 @@ onUnmounted(() => {
           style="
             position: absolute;
             width: 90vw;
-            height: 50%;
             right: 0;
-            border-top: 2px solid white;
-            height: 100%;
-            border-left: 3px solid white;
-            border-bottom: 2px solid white;
+            height: 80%;
             padding-top: 5%;
             padding-bottom: 5%;
             padding-left: 5%;
@@ -209,11 +205,7 @@ onUnmounted(() => {
           <Carousel />
         </div>
       </div>
-      <p class="bottom-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam
-      </p>
+      <p style="color: white; font-size: 10vw">11 pasos</p>
     </section>
 
     <section class="make-reservation full-page" ref="reservationRef">
