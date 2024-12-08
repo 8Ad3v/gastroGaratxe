@@ -61,7 +61,7 @@ const toggleMenu2 = () => {
   width: 100%;
   color: white;
   z-index: 200;
-  margin-top: 10px;
+  margin-top: 1.2vh;
   display: flex;
   align-items: center;
   justify-content: space-between;

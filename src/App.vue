@@ -16,9 +16,9 @@ onMounted(() => {
 
 <template>
   <!-- <Animation></Animation> -->
-  <headerOptions></headerOptions>
-  <background></background>
-  <content></content>
+  <headerOptions v-show="!preloaderActive"></headerOptions>
+  <background v-show="!preloaderActive"></background>
+  <content v-show="!preloaderActive"></content>
 
   <div :class="['preloader-test', { 'preloader-exit': !preloaderActive }]">
     <img src="/src/assets/gd.png" />
