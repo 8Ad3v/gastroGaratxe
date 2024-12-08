@@ -19,10 +19,10 @@ export const useBgStore = defineStore("BgStore", {
       if (newSection === "GastroGaratxe") {
         this.section = 1;
         this.actVid = generalVideo;
-      } else if (newSection === "Sobre nosotros") {
+      } else if (newSection === "Conocenos") {
         this.section = 2;
         this.actVid = sobreNosVideo;
-      } else if (newSection === "Historia") {
+      } else if (newSection === "Origenes") {
         this.section = 3;
         this.actVid = historiaVideo;
       } else if (newSection === "Menu") {
