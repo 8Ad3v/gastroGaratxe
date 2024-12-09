@@ -72,7 +72,20 @@ const observer = new IntersectionObserver(
   },
   { threshold: 0.5 } // El porcentaje de visibilidad necesario para que se dispare el callback
 );
+const observeElements = () => {
+  const elements = document.querySelectorAll(".fade-in");
 
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target); // Evita observarlo después de la primera animación
+      }
+    });
+  });
+
+  elements.forEach((el) => observer.observe(el));
+};
 const handleIntersection = (entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -156,6 +169,7 @@ const textsToType = [
 
 onMounted(() => {
   nextTick(() => {
+    observeElements();
     createObserver();
     const observer2 = new IntersectionObserver(
       (entries) => {
@@ -260,17 +274,32 @@ onUnmounted(() => {
       ref="foodMenuRef"
     >
       <p class="title-test" ref="titleMenuRef">Menu</p>
-      <div class="menu-images" style="position: relative; /* right: 0; */">
+      <div class="menu-images fade-in">
         <Carousel />
       </div>
-      <div class="food-menu-info">
+
+      <div class="food-menu-info fade-in">
         <div class="food-menu-info-steps">
           <p ref="number1">{{ animatedNumber1 }}</p>
           <p>pasos</p>
         </div>
+        <hr
+          style="
+            width: 20%;
+            margin: 0 auto;
+            height: 0.3vh;
+            color: white;
+            background-color: white;
+          "
+        />
         <div class="food-menu-info-steps">
           <p ref="number2">{{ animatedNumber2 }}</p>
           <p>ingredientes</p>
+        </div>
+
+        <div class="food-menu-info-steps price">
+          <p>65€</p>
+          <p>(IVA incluido)</p>
         </div>
       </div>
     </section>
@@ -376,25 +405,43 @@ onUnmounted(() => {
       background-position: center;
       background-repeat: no-repeat;
       overflow: hidden;
+      position: absolute;
+      left: 0;
+      margin-top: 20%;
     }
 
     &-info {
       width: 100%;
       height: fit-content;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: space-between;
+
       p {
         color: white;
         font-family: "Orbitron", sans-serif;
       }
       &-steps {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
         p:nth-of-type(1) {
-          font-size: 18vw;
+          font-size: 10vw;
         }
 
         p:nth-of-type(2) {
           font-size: 8vw;
+        }
+      }
+      .price {
+        p:nth-of-type(1) {
+          font-size: 5vw;
+        }
+
+        p:nth-of-type(2) {
+          font-size: 4vw;
         }
       }
     }
@@ -419,6 +466,17 @@ onUnmounted(() => {
     height: 100%;
     transform: scale(1); /* Ajusta el tamaño global */
     transform-origin: 0 0; /* Ajusta el punto de origen del escalado */
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>
