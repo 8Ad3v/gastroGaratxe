@@ -79,9 +79,6 @@ li {
 </style> -->
 <template>
   <section class="slide-option" style="overflow: hidden">
-    <div class="container">
-      <h3 class="no-marg">closed infinite loop</h3>
-    </div>
     <div id="infinite" class="highway-slider">
       <div class="container highway-barrier">
         <ul class="highway-lane">
