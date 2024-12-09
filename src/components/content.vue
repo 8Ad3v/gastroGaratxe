@@ -112,9 +112,52 @@ const createObserver = () => {
   }
 };
 
+function animateNumber(finalValue, currentNumber, duration = 2000) {
+  const startTime = performance.now();
+
+  function updateAnimation(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    currentNumber.value = Math.floor(finalValue * progress);
+
+    if (progress < 1) {
+      requestAnimationFrame(updateAnimation);
+    }
+  }
+
+  requestAnimationFrame(updateAnimation);
+}
+const targetNumber1 = 11; // Número final del primer <p>
+const targetNumber2 = 60; // Número final del segundo <p>
+
+// Números animados
+const animatedNumber1 = ref(0);
+const animatedNumber2 = ref(0);
+
+// Referencias para los elementos
+const number1 = ref(null);
+const number2 = ref(null);
+
 onMounted(() => {
   nextTick(() => {
     createObserver();
+    const observer2 = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (entry.target === number1.value) {
+              animateNumber(targetNumber1, animatedNumber1);
+            } else if (entry.target === number2.value) {
+              animateNumber(targetNumber2, animatedNumber2);
+            }
+          }
+        });
+      },
+      { threshold: 0.5 } // Se activa cuando el 50% del elemento es visible
+    );
+
+    if (number1.value) observer2.observe(number1.value);
+    if (number2.value) observer2.observe(number2.value);
   });
 
   if (reserveButtonRef.value) {
@@ -165,7 +208,7 @@ onUnmounted(() => {
 
     <section class="about-us full-page" ref="aboutUsRef">
       <p class="title-test" ref="titleAboutUsRef">Conocenos</p>
-      <p class="bottom-text">
+      <p class="bottom-text typingEffect">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam
@@ -190,7 +233,16 @@ onUnmounted(() => {
       <div class="menu-images" style="position: relative; /* right: 0; */">
         <Carousel />
       </div>
-      <p style="color: white; font-size: 10vw">11 pasos</p>
+      <div class="food-menu-info">
+        <div class="food-menu-info-steps">
+          <p ref="number1">{{ animatedNumber1 }}</p>
+          <p>pasos</p>
+        </div>
+        <div class="food-menu-info-steps">
+          <p ref="number2">{{ animatedNumber2 }}</p>
+          <p>ingredientes</p>
+        </div>
+      </div>
     </section>
 
     <section class="make-reservation full-page" ref="reservationRef">
@@ -216,13 +268,6 @@ onUnmounted(() => {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth; /* Para que el scroll sea suave */
 
-  .menu-container {
-    height: 100dvh;
-    width: 100vw;
-    position: relative;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
   .title-test {
     z-index: 20;
     color: white;
@@ -301,12 +346,26 @@ onUnmounted(() => {
       background-position: center;
       background-repeat: no-repeat;
       overflow: hidden;
+    }
 
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Escala la imagen para cubrir todo el contenedor, recortando si es necesario */
-        object-position: center; /* Centra la imagen dentro del contenedor */
+    &-info {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      p {
+        color: white;
+        font-family: "Orbitron", sans-serif;
+      }
+      &-steps {
+        p:nth-of-type(1) {
+          font-size: 18vw;
+        }
+
+        p:nth-of-type(2) {
+          font-size: 8vw;
+        }
       }
     }
   }
