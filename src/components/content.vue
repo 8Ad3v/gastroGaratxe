@@ -21,13 +21,18 @@ const reserveButtonRef = ref(null);
 const menuStore = useMenuStore();
 const BgStore = useBgStore();
 
-const images = ref([
-  { id: 1, url: "/src/assets/food/food1.jpeg" },
-  { id: 2, url: "/src/assets/food/food2.jpeg" },
-  { id: 3, url: "/src/assets/food/food3.jpeg" },
-  { id: 4, url: "/src/assets/food/food4.jpeg" },
-  { id: 5, url: "/src/assets/food/food5.jpeg" },
-]);
+const typingEffect = (element, text, speed = 20) => {
+  let i = 0;
+  element.innerHTML = ""; // Limpia el contenido previo
+  function typeWriter() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+  typeWriter();
+};
 
 const scrollToAboutUs = () => {
   if (aboutUsRef.value) {
@@ -138,6 +143,17 @@ const animatedNumber2 = ref(0);
 const number1 = ref(null);
 const number2 = ref(null);
 
+const textsToType = [
+  {
+    id: "typingText1",
+    text: `Carlos y Eric, amigos y chefs apasionados, te invitamos a disfrutar de una experiencia única a cocina vista donde cada plato refleja creatividad y amor por la cocina.`,
+  },
+  {
+    id: "typingText2",
+    text: `Nuestros orígenes se remontan a un humilde garaje, el único local disponible, donde Carlos y Eric comenzaron su sueño de crear algo único en la cocina.`,
+  },
+];
+
 onMounted(() => {
   nextTick(() => {
     createObserver();
@@ -155,10 +171,32 @@ onMounted(() => {
       },
       { threshold: 0.5 } // Se activa cuando el 50% del elemento es visible
     );
-
     if (number1.value) observer2.observe(number1.value);
     if (number2.value) observer2.observe(number2.value);
+
+    const observer3 = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Aplica el efecto solo a los elementos visibles
+            const element = entry.target;
+            const textObj = textsToType.find((obj) => obj.id === element.id);
+            if (textObj) {
+              typingEffect(element, textObj.text);
+              observer.unobserve(entry.target); // Deja de observar después de activar
+            }
+          }
+        });
+      },
+      { threshold: 1.0 } // Solo cuando está completamente visible
+    );
+    textsToType.forEach((textObj) => {
+      const element = document.getElementById(textObj.id);
+      if (element) observer3.observe(element);
+    });
   });
+
+  window.addEventListener("headerreservation", scrollToReservation);
 
   if (reserveButtonRef.value) {
     observer.observe(reserveButtonRef.value);
@@ -208,20 +246,12 @@ onUnmounted(() => {
 
     <section class="about-us full-page" ref="aboutUsRef">
       <p class="title-test" ref="titleAboutUsRef">Conocenos</p>
-      <p class="bottom-text typingEffect">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam
-      </p>
+      <p id="typingText1" class="bottom-text typingEffect"></p>
     </section>
 
     <section class="history full-page" ref="historyRef">
       <p class="title-test" ref="titleHistoryRef">Origenes</p>
-      <p class="bottom-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam
-      </p>
+      <p id="typingText2" class="bottom-text"></p>
     </section>
 
     <section

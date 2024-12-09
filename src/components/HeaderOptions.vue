@@ -8,48 +8,17 @@ const menuStore = useMenuStore();
 // Hacemos reactiva la variable `isInHomePage`
 const isInHomePage = computed(() => menuStore.isInHomePage);
 
-// Variables reactivas locales
-const menuDisplayedLocal = ref(false);
-const burgerChecked = ref(false);
-
-// Función para alternar el menú
-const toggleMenu2 = () => {
-  menuDisplayedLocal.value = burgerChecked.value;
-  console.log("Checkbox is now:", burgerChecked.value);
+const emitReservation = () => {
+  // Emitimos el evento
+  const event = new CustomEvent("headerreservation");
+  window.dispatchEvent(event);
 };
 </script>
 
 <template>
-  <!-- Condicionalmente renderizamos headerOptionsContainer -->
   <div v-if="!isInHomePage" class="headerOptionsContainer">
-    <div @click.stop="decideoption"><button>RESERVA</button></div>
+    <div @click.stop="emitReservation"><button>RESERVA</button></div>
     <div><img src="/src/assets/logo.png" /></div>
-    <!-- <div class="h-menu">
-      <label class="burger" for="burger">
-        <input
-          type="checkbox"
-          id="burger"
-          v-model="burgerChecked"
-          @change="toggleMenu2"
-        />
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-    </div> -->
-  </div>
-
-  <div
-    :class="[
-      'full-menu',
-      { 'slide-in': menuDisplayedLocal, 'slide-out': !menuDisplayedLocal },
-    ]"
-  >
-    <div>
-      <p>SOBRE NOSOTROS</p>
-      <p>HISTORIA</p>
-      <p>MENU</p>
-    </div>
   </div>
 </template>
 
