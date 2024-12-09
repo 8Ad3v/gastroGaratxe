@@ -149,7 +149,7 @@ div.highway-slider {
   position: absolute; /* Asegura que la imagen sea manejable dentro del contenedor */
   top: 50%; /* Centra verticalmente la imagen */
   left: 50%; /* Centra horizontalmente la imagen */
-  width: 100%; /* Asegura que la imagen ocupe todo el ancho */
+  width: 50%; /* Asegura que la imagen ocupe todo el ancho */
   height: 100%; /* Asegura que la imagen ocupe todo el alto */
   object-fit: cover; /* Ajusta la imagen con zoom, recortando las partes necesarias */
   transform: translate(
@@ -170,6 +170,7 @@ div.highway-slider {
     width: 500%;
     li.highway-car {
       animation: translatestf 30s linear infinite;
+      width: 50%;
       h4 {
         font-size: 28px;
       }
