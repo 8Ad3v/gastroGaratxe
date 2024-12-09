@@ -1,16 +1,39 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useBgStore } from "@/stores/BgStore";
 import background from "./components/background.vue";
 import Animation from "./components/Animation.vue";
 import headerOptions from "./components/HeaderOptions.vue";
 import content from "./components/content.vue";
 
 const preloaderActive = ref(true);
+const bgStore = useBgStore();
 
-onMounted(() => {
-  setTimeout(() => {
-    preloaderActive.value = false;
-  }, 1000); // Espera 2 segundos antes de iniciar la animación
+// Función para esperar a que los videos se carguen
+const waitForVideosToLoad = async (videos) => {
+  const loadVideo = (videoUrl) => {
+    return new Promise((resolve) => {
+      const video = document.createElement("video");
+      video.src = videoUrl;
+      video.onloadeddata = () => resolve();
+      video.onerror = () => resolve(); // Resolver incluso si ocurre un error
+    });
+  };
+
+  const loadPromises = videos.map(loadVideo);
+  await Promise.all(loadPromises);
+};
+
+onMounted(async () => {
+  // Esperar a que se carguen los videos del store
+  await waitForVideosToLoad([
+    bgStore.vidHome,
+    bgStore.vidAboutUs,
+    bgStore.actVid,
+  ]);
+
+  // Desactivar el preloader
+  preloaderActive.value = false;
 });
 </script>
 
