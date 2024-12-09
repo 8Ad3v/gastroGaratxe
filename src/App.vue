@@ -2,8 +2,8 @@
 import { ref, onMounted } from "vue";
 import { useBgStore } from "@/stores/BgStore";
 import background from "./components/background.vue";
-import Animation from "./components/Animation.vue";
 import headerOptions from "./components/HeaderOptions.vue";
+import horizontal from "./components/horizontalContent.vue";
 import content from "./components/content.vue";
 
 const preloaderActive = ref(true);
@@ -49,8 +49,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="showHorizontalWarning" class="horizontal-warning">
-    <p>Accede desde un dispositivo móvil para una mejor experiencia.</p>
+  <div v-if="showHorizontalWarning">
+    <horizontal></horizontal>
   </div>
   <div v-else>
     <headerOptions v-show="!preloaderActive"></headerOptions>
