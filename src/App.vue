@@ -7,6 +7,7 @@ import headerOptions from "./components/HeaderOptions.vue";
 import content from "./components/content.vue";
 
 const preloaderActive = ref(true);
+const showHorizontalWarning = ref(false); // Mostrar el mensaje de advertencia
 const bgStore = useBgStore();
 
 // Función para esperar a que los videos se carguen
@@ -24,7 +25,17 @@ const waitForVideosToLoad = async (videos) => {
   await Promise.all(loadPromises);
 };
 
+// Detectar relación de aspecto
+const checkAspectRatio = () => {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  showHorizontalWarning.value = width >= height; // Mostrar mensaje si la pantalla es más ancha que alta
+};
+
 onMounted(async () => {
+  checkAspectRatio();
+  window.addEventListener("resize", checkAspectRatio); // Escuchar cambios de tamaño
+
   // Esperar a que se carguen los videos del store
   await waitForVideosToLoad([
     bgStore.vidHome,
@@ -38,13 +49,17 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- <Animation></Animation> -->
-  <headerOptions v-show="!preloaderActive"></headerOptions>
-  <background v-show="!preloaderActive"></background>
-  <content v-show="!preloaderActive"></content>
+  <div v-if="showHorizontalWarning" class="horizontal-warning">
+    <p>Accede desde un dispositivo móvil para una mejor experiencia.</p>
+  </div>
+  <div v-else>
+    <headerOptions v-show="!preloaderActive"></headerOptions>
+    <background v-show="!preloaderActive"></background>
+    <content v-show="!preloaderActive"></content>
 
-  <div :class="['preloader-test', { 'preloader-exit': !preloaderActive }]">
-    <img src="/src/assets/gd.png" />
+    <div :class="['preloader-test', { 'preloader-exit': !preloaderActive }]">
+      <img src="/src/assets/gd.png" />
+    </div>
   </div>
 </template>
 
@@ -74,5 +89,18 @@ onMounted(async () => {
 
 .preloader-exit {
   transform: translateY(-100%); /* Mueve hacia arriba */
+}
+
+.horizontal-warning {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: black;
+  color: white;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 20px;
 }
 </style>
