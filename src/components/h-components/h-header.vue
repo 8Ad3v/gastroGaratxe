@@ -1,9 +1,15 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useColorStore } from "@/stores/hColorsStore.js";
+import { useBgStore } from "@/stores/BgStore"; // Asegúrate de que la ruta del store sea correcta
 
+const BgStore = useBgStore();
 const colorStore = useColorStore();
+
 const hHeader = ref(null); // Referencia al elemento .h-info
+
+const hInfoTitleVisible = ref(false); // Estado para la visibilidad del título
+const hInfolinksvisible = ref(false); // Estado para la visibilidad de los enlaces
 
 // Cambiar colores dinámicamente desde el store
 const changeColors = () => {
@@ -15,9 +21,14 @@ const observer = new IntersectionObserver(
   (entries, observerInstance) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        // Cuando el elemento entra en el viewport, ejecuta changeColors
+        hInfoTitleVisible.value = true;
+        hInfolinksvisible.value = true;
+        // Cando el elemento entra en el viewport, ejecuta changeColors
         changeColors();
-        // Deja de observar el elemento si solo quieres ejecutarlo una vez
+        BgStore.changeSection("GastroGaratxe");
+      } else {
+        hInfoTitleVisible.value = false;
+        hInfolinksvisible.value = false;
       }
     });
   },
@@ -34,12 +45,45 @@ onMounted(() => {
 
 <template>
   <div class="h-header" ref="hHeader">
-    <p class="h-header-title">GastroGaratxe</p>
+    <p
+      class="h-header-title"
+      :class="{ 'fade-in': hInfoTitleVisible, 'fade-out': !hInfoTitleVisible }"
+    >
+      GastroGaratxe
+    </p>
     <div class="h-header-navigation">
-      <button>Conocenos</button>
-      <button>Origenes</button>
-      <button>Menu</button>
-      <button>Reservar</button>
+      <button
+        :class="{
+          'fade-in': hInfolinksvisible,
+          'fade-out': !hInfolinksvisible,
+        }"
+      >
+        Conocenos
+      </button>
+      <button
+        :class="{
+          'fade-in': hInfolinksvisible,
+          'fade-out': !hInfolinksvisible,
+        }"
+      >
+        Origenes
+      </button>
+      <button
+        :class="{
+          'fade-in': hInfolinksvisible,
+          'fade-out': !hInfolinksvisible,
+        }"
+      >
+        Menu
+      </button>
+      <button
+        :class="{
+          'fade-in': hInfolinksvisible,
+          'fade-out': !hInfolinksvisible,
+        }"
+      >
+        Reservar
+      </button>
     </div>
   </div>
 </template>
@@ -94,7 +138,7 @@ onMounted(() => {
         width: 0; /* Comienza sin ancho */
         height: 2px; /* Grosor de la línea */
         background-color: var(--text-color);
-        transition: width 0.3s ease-in-out; /* Animación de crecimiento */
+        transition: width 1s ease-in-out; /* Animación de crecimiento */
       }
 
       &:hover::after {

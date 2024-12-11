@@ -1,31 +1,45 @@
 <script setup>
+import { ref, watch } from "vue";
 import hheader from "@/components/h-components/h-header.vue";
 import hinfo from "@/components/h-components/h-info.vue";
+import hinfo2 from "@/components/h-components/h-info2.vue";
 import { useColorStore } from "@/stores/hColorsStore.js";
-const colorStore = useColorStore();
+import { useBgStore } from "@/stores/BgStore.js";
 
-// Cambiar colores dinámicamente desde el store
-const changeColors = () => {
-  colorStore.changeColors("#ff6347", "#000000"); // Rojo tomate para el texto y negro para el fondo
-};
+const colorStore = useColorStore();
+const bgStore = useBgStore();
+
+// Estado reactivo para manejar la transición del video
+const isTransitioning = ref(false); // Estado para la clase de transición
+const currentVideo = ref(bgStore.actVid); // Video actual
+
+// Verificar cambios en el video
+watch(
+  () => bgStore.actVid,
+  (newVideo) => {
+    isTransitioning.value = true; // Activa la transición
+    setTimeout(() => {
+      currentVideo.value = newVideo; // Cambia el video después de la transición
+      setTimeout(() => {
+        isTransitioning.value = false; // Desactiva la transición
+      }, 100); // Tiempo de la transición (1s)
+    }, 200); // Tiempo para fundir a negro
+  }
+);
 </script>
 
 <template>
   <div class="horizontalContainer">
     <!-- Parte derecha: Contenedor del video -->
     <div class="video-container">
-      <video
-        class="video"
-        src="@/assets/vid/general.mp4"
-        autoplay
-        muted
-        loop
-      ></video>
+      <div class="overlay" :class="{ active: isTransitioning }"></div>
+      <video class="video" :src="currentVideo" autoplay muted loop></video>
     </div>
 
     <div class="content">
       <hheader></hheader>
       <hinfo></hinfo>
+      <hinfo2></hinfo2>
     </div>
   </div>
 </template>
@@ -42,18 +56,35 @@ const changeColors = () => {
   overflow: hidden;
 
   .video-container {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     max-width: 45%;
-    background-color: black; /* Opcional: color de fondo */
-  }
+    background-color: black;
 
-  .video {
-    height: 100%; /* Video ocupa toda la altura del contenedor */
-    width: auto; /* Mantiene proporciones del video */
-    object-fit: cover;
+    .video {
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+    }
+
+    // Overlay para la transición
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      opacity: 0; // Invisible por defecto
+      transition: opacity 0.5s ease-in-out;
+
+      &.active {
+        opacity: 1; // Visible durante la transición
+      }
+    }
   }
 
   .content {
@@ -62,7 +93,7 @@ const changeColors = () => {
       --background-color
     ); /* Usar 
     overflow-y: auto; /* Activa scroll vertical */
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color 1s ease-in-out;
     padding: 20px; /* Espaciado interno */
 
     /* Asegura que el contenido no se desborde horizontalmente */
@@ -74,7 +105,7 @@ const changeColors = () => {
 
     p {
       color: var(--text-color);
-      transition: color 0.2s ease-in-out;
+      transition: color 0s ease-in-out;
     }
     .content-body {
       display: flex;
@@ -84,7 +115,7 @@ const changeColors = () => {
 
     /* Estilo opcional para el scroll */
     &::-webkit-scrollbar {
-      width: 8px;
+      width: 0px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -95,6 +126,17 @@ const changeColors = () => {
     &::-webkit-scrollbar-thumb:hover {
       background-color: gray;
     }
+  }
+
+  // Clases dinámicas para fade-in y fade-out
+  .fade-in {
+    opacity: 1; // Visible
+    transform: translateY(0); // Posición normal
+  }
+
+  .fade-out {
+    opacity: 0; // Invisible
+    transform: translateY(20px); // Desplazado hacia abajo
   }
 }
 </style>

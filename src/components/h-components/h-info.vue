@@ -1,30 +1,39 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useColorStore } from "@/stores/hColorsStore.js";
+import { useBgStore } from "@/stores/BgStore"; // Asegúrate de que la ruta del store sea correcta
 
 const colorStore = useColorStore();
-const hInfoRef = ref(null); // Referencia al elemento .h-info
+const hInfoRef = ref(null); // Referencia al contenedor .h-info
+const hInfoTitleVisible = ref(false); // Estado para la visibilidad del título
+const hInfoPVisible = ref(false); // Estado para la visibilidad del párrafo
+
+const BgStore = useBgStore();
 
 // Cambiar colores dinámicamente desde el store
 const changeColors = () => {
   colorStore.changeColors("#f0f0f0", "#000000");
 };
 
-// Función para observar el elemento
+// Observador de intersección
 const observer = new IntersectionObserver(
-  (entries, observerInstance) => {
+  (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        // Cuando el elemento entra en el viewport, ejecuta changeColors
+        hInfoTitleVisible.value = true;
+        hInfoPVisible.value = true;
         changeColors();
-        // Deja de observar el elemento si solo quieres ejecutarlo una vez
+        BgStore.changeSection("Conocenos");
+      } else {
+        hInfoTitleVisible.value = false;
+        hInfoPVisible.value = false;
       }
     });
   },
   { threshold: 0.5 }
-); // Se dispara cuando el 50% del elemento es visible
+);
 
-// Al montar el componente, comenzamos a observar el elemento
+// Al montar el componente, comenzar a observar el elemento
 onMounted(() => {
   if (hInfoRef.value) {
     observer.observe(hInfoRef.value);
@@ -34,12 +43,20 @@ onMounted(() => {
 
 <template>
   <div class="h-info" ref="hInfoRef">
-    <p class="h-info-title">Conocenos</p>
-    <div class="h-info-p">
+    <p
+      class="h-info-title"
+      :class="{ 'fade-in': hInfoTitleVisible, 'fade-out': !hInfoTitleVisible }"
+    >
+      Conocenos
+    </p>
+    <div
+      class="h-info-p"
+      :class="{ 'fade-in': hInfoPVisible, 'fade-out': !hInfoPVisible }"
+    >
       <p>
-        Nuestros orígenes se remontan a un humilde garaje, el único local
-        disponible, donde Carlos y Eric comenzaron su sueño de crear algo único
-        en la cocina.
+        Carlos y Eric, amigos y chefs apasionados, te invitamos a disfrutar de
+        una experiencia única a cocina vista donde cada plato refleja
+        creatividad y amor por la cocina.
       </p>
     </div>
   </div>
@@ -59,9 +76,15 @@ onMounted(() => {
 
   &-title {
     font-size: 6vw;
+    opacity: 0; // Inicialmente invisible
+    transition: opacity 1s ease, transform 1s ease; // Animaciones suaves
+    transform: translateY(20px); // Comienza desplazado hacia abajo
   }
   &-p {
     font-size: 2vw;
+    opacity: 0; // Inicialmente invisible
+    transition: opacity 1s ease, transform 1s ease;
+    transform: translateY(20px); // Comienza desplazado hacia abajo
     p {
       text-align: left;
     }
