@@ -30,7 +30,7 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.5 }
+  { threshold: 0.8 }
 );
 
 // Al montar el componente, comenzar a observar el elemento

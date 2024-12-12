@@ -3,11 +3,14 @@ import { ref, watch } from "vue";
 import hheader from "@/components/h-components/h-header.vue";
 import hinfo from "@/components/h-components/h-info.vue";
 import hinfo2 from "@/components/h-components/h-info2.vue";
+import hmenu from "@/components/h-components/h-menu.vue";
 import { useColorStore } from "@/stores/hColorsStore.js";
 import { useBgStore } from "@/stores/BgStore.js";
+import { useHorizontalStore } from "@/stores/horizontalStore.js";
 
 const colorStore = useColorStore();
 const bgStore = useBgStore();
+const horizontalStore = useHorizontalStore();
 
 // Estado reactivo para manejar la transición del video
 const isTransitioning = ref(false); // Estado para la clase de transición
@@ -31,15 +34,24 @@ watch(
 <template>
   <div class="horizontalContainer">
     <!-- Parte derecha: Contenedor del video -->
-    <div class="video-container">
-      <div class="overlay" :class="{ active: isTransitioning }"></div>
-      <video class="video" :src="currentVideo" autoplay muted loop></video>
+    <!-- Parte derecha: Contenedor del video o imagen -->
+    <div
+      class="video-container"
+      :class="{ 'menu-active': !horizontalStore.isTextPart }"
+    >
+      <template v-if="!horizontalStore.isTextPart">
+        <div></div>
+      </template>
+      <template v-else>
+        <video class="video" :src="bgStore.actVid" autoplay muted loop></video>
+      </template>
     </div>
 
     <div class="content">
       <hheader></hheader>
       <hinfo></hinfo>
       <hinfo2></hinfo2>
+      <hmenu></hmenu>
     </div>
   </div>
 </template>
@@ -63,6 +75,11 @@ watch(
     height: 100%;
     max-width: 45%;
     background-color: black;
+    transition: width 0.5s ease-in-out, max-width 0.5s ease-in-out;
+
+    &.menu-active {
+      width: 0%; // Cambia el ancho al 50% cuando hMenuRef es visible
+    }
 
     .video {
       height: 100%;
@@ -94,7 +111,6 @@ watch(
     ); /* Usar 
     overflow-y: auto; /* Activa scroll vertical */
     transition: background-color 1s ease-in-out;
-    padding: 20px; /* Espaciado interno */
 
     /* Asegura que el contenido no se desborde horizontalmente */
     box-sizing: border-box;

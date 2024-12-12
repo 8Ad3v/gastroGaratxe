@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 
 export const useHorizontalStore = defineStore("HorizontalStore", {
-  state: () => ({}),
+  state: () => ({
+    isTextPart: true,
+  }),
   actions: {},
 });

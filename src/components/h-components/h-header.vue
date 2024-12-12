@@ -32,7 +32,7 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.5 }
+  { threshold: 0.8 }
 ); // Se dispara cuando el 50% del elemento es visible
 
 // Al montar el componente, comenzamos a observar el elemento
