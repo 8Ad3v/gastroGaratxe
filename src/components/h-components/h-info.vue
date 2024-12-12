@@ -77,7 +77,7 @@ onMounted(() => {
   &-title {
     font-size: 6vw;
     opacity: 0; // Inicialmente invisible
-    transition: opacity 1s ease, transform 1s ease; // Animaciones suaves
+    transition: opacity 1s ease, transform 1s ease !important; // Animaciones suaves
     transform: translateY(20px); // Comienza desplazado hacia abajo
   }
   &-p {
