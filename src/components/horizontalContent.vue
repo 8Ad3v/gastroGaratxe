@@ -128,20 +128,6 @@ watch(
       flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
       gap: 10px; /* Espaciado entre los elementos */
     }
-
-    /* Estilo opcional para el scroll */
-    &::-webkit-scrollbar {
-      width: 0px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: darkgray;
-      border-radius: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: gray;
-    }
   }
 
   // Clases dinámicas para fade-in y fade-out

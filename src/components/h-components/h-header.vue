@@ -45,45 +45,12 @@ onMounted(() => {
 
 <template>
   <div class="h-header" ref="hHeader">
-    <p
-      class="h-header-title"
-      :class="{ 'fade-in': hInfoTitleVisible, 'fade-out': !hInfoTitleVisible }"
-    >
-      GastroGaratxe
-    </p>
+    <p class="h-header-title">GastroGaratxe</p>
     <div class="h-header-navigation">
-      <button
-        :class="{
-          'fade-in': hInfolinksvisible,
-          'fade-out': !hInfolinksvisible,
-        }"
-      >
-        Conocenos
-      </button>
-      <button
-        :class="{
-          'fade-in': hInfolinksvisible,
-          'fade-out': !hInfolinksvisible,
-        }"
-      >
-        Origenes
-      </button>
-      <button
-        :class="{
-          'fade-in': hInfolinksvisible,
-          'fade-out': !hInfolinksvisible,
-        }"
-      >
-        Menu
-      </button>
-      <button
-        :class="{
-          'fade-in': hInfolinksvisible,
-          'fade-out': !hInfolinksvisible,
-        }"
-      >
-        Reservar
-      </button>
+      <button>Conocenos</button>
+      <button>Origenes</button>
+      <button>Menu</button>
+      <button>Reservar</button>
     </div>
   </div>
 </template>
@@ -92,7 +59,6 @@ onMounted(() => {
 .h-header {
   scroll-snap-align: start;
   font-family: "Orbitron", sans-serif;
-  height: 100dvh;
   display: flex;
   align-content: flex-start;
   flex-direction: column;
@@ -138,7 +104,6 @@ onMounted(() => {
         width: 0; /* Comienza sin ancho */
         height: 2px; /* Grosor de la línea */
         background-color: var(--text-color);
-        transition: width 1s ease-in-out; /* Animación de crecimiento */
       }
 
       &:hover::after {

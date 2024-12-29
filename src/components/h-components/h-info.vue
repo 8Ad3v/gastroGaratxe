@@ -22,7 +22,7 @@ const observer = new IntersectionObserver(
       if (entry.isIntersecting) {
         hInfoTitleVisible.value = true;
         hInfoPVisible.value = true;
-        changeColors();
+        // changeColors();
         BgStore.changeSection("Conocenos");
       } else {
         hInfoTitleVisible.value = false;
@@ -43,16 +43,8 @@ onMounted(() => {
 
 <template>
   <div class="h-info" ref="hInfoRef">
-    <p
-      class="h-info-title"
-      :class="{ 'fade-in': hInfoTitleVisible, 'fade-out': !hInfoTitleVisible }"
-    >
-      Conocenos
-    </p>
-    <div
-      class="h-info-p"
-      :class="{ 'fade-in': hInfoPVisible, 'fade-out': !hInfoPVisible }"
-    >
+    <p class="h-info-title">Conocenos</p>
+    <div class="h-info-p">
       <p>
         Carlos y Eric, amigos y chefs apasionados, te invitamos a disfrutar de
         una experiencia única a cocina vista donde cada plato refleja
@@ -76,14 +68,10 @@ onMounted(() => {
 
   &-title {
     font-size: 6vw;
-    opacity: 0; // Inicialmente invisible
-    transition: opacity 1s ease, transform 1s ease !important; // Animaciones suaves
     transform: translateY(20px); // Comienza desplazado hacia abajo
   }
   &-p {
     font-size: 2vw;
-    opacity: 0; // Inicialmente invisible
-    transition: opacity 1s ease, transform 1s ease;
     transform: translateY(20px); // Comienza desplazado hacia abajo
     p {
       text-align: left;

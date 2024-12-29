@@ -4,6 +4,7 @@ import { useBgStore } from "@/stores/BgStore";
 import background from "./components/background.vue";
 import headerOptions from "./components/HeaderOptions.vue";
 import horizontal from "./components/horizontalContent.vue";
+import nhorizontal from "./components/newHorizontalContent.vue";
 import content from "./components/content.vue";
 
 const preloaderActive = ref(true);
@@ -50,7 +51,7 @@ onMounted(async () => {
 
 <template>
   <div v-if="showHorizontalWarning">
-    <horizontal></horizontal>
+    <nhorizontal></nhorizontal>
   </div>
   <div v-else>
     <headerOptions v-show="!preloaderActive"></headerOptions>
