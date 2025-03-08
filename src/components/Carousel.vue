@@ -3,18 +3,18 @@
     <article :class="{ paused: isPaused }" style="height: 100%">
       <div style="height: 100%">
         <ul style="height: 100%">
-          <li><img src="/src/assets/food/food1.jpeg" /></li>
-          <li><img src="/src/assets/food/food2.jpeg" /></li>
-          <li><img src="/src/assets/food/food3.jpeg" /></li>
-          <li><img src="/src/assets/food/food4.jpeg" /></li>
+          <li><img src="/src/assets/food/food1.jpg" /></li>
+          <li><img src="/src/assets/food/food2.jpg" /></li>
+          <li><img src="/src/assets/food/food3.jpg" /></li>
+          <li><img src="/src/assets/food/food4.jpg" /></li>
         </ul>
       </div>
       <div style="height: 100%">
         <ul style="height: 100%">
-          <li><img src="/src/assets/food/food1.jpeg" /></li>
-          <li><img src="/src/assets/food/food2.jpeg" /></li>
-          <li><img src="/src/assets/food/food3.jpeg" /></li>
-          <li><img src="/src/assets/food/food4.jpeg" /></li>
+          <li><img src="/src/assets/food/food1.jpg" /></li>
+          <li><img src="/src/assets/food/food2.jpg" /></li>
+          <li><img src="/src/assets/food/food3.jpg" /></li>
+          <li><img src="/src/assets/food/food4.jpg" /></li>
         </ul>
       </div>
     </article>
@@ -83,34 +83,29 @@ li {
       <div class="container highway-barrier">
         <ul class="highway-lane">
           <li class="highway-car">
-            <img src="/src/assets/food/food1.jpeg" class="slider-img" />
+            <img src="/src/assets/food/food8.jpg" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food2.jpeg" class="slider-img" />
+            <img src="/src/assets/food/food7.jpg" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food3.jpeg" class="slider-img" />
+            <img src="/src/assets/food/food9.jpg" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food4.jpeg" class="slider-img" />
+            <img src="/src/assets/food/food10.jpg" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food1.jpeg" class="slider-img" />
+            <img src="/src/assets/food/food11.jpg" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food2.jpeg" class="slider-img" />
-          </li>
-          <li class="highway-car">
-            <img src="/src/assets/food/food3.jpeg" class="slider-img" />
-          </li>
-          <li class="highway-car">
-            <img src="/src/assets/food/food4.jpeg" class="slider-img" />
+            <img src="/src/assets/food/food12.jpg" class="slider-img" />
           </li>
         </ul>
       </div>
     </div>
   </section>
 </template>
+
 <style>
 section.slide-option {
   overflow: hidden;
@@ -149,7 +144,6 @@ div.highway-slider {
   position: absolute; /* Asegura que la imagen sea manejable dentro del contenedor */
   top: 50%; /* Centra verticalmente la imagen */
   left: 50%; /* Centra horizontalmente la imagen */
-  width: 50%; /* Asegura que la imagen ocupe todo el ancho */
   height: 100%; /* Asegura que la imagen ocupe todo el alto */
   object-fit: cover; /* Ajusta la imagen con zoom, recortando las partes necesarias */
   transform: translate(
