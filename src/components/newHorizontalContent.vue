@@ -4,6 +4,7 @@ import hheader from "@/components/h-components/h-header.vue";
 import hinfo from "@/components/h-components/h-info.vue";
 import hinfo2 from "@/components/h-components/h-info2.vue";
 import hmenu from "@/components/h-components/h-menu.vue";
+import scrollbtn from "@/components/buttons/arrows.vue";
 import hmenuS from "@/components/h-components/h-menuSlider.vue";
 
 import { useColorStore } from "@/stores/hColorsStore.js";
