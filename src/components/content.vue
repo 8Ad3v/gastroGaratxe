@@ -21,18 +21,18 @@ const reserveButtonRef = ref(null);
 const menuStore = useMenuStore();
 const BgStore = useBgStore();
 
-const typingEffect = (element, text, speed = 20) => {
-  let i = 0;
-  element.innerHTML = ""; // Limpia el contenido previo
-  function typeWriter() {
-    if (i < text.length) {
-      element.innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typeWriter, speed);
-    }
-  }
-  typeWriter();
-};
+// const typingEffect = (element, text, speed = 20) => {
+//   let i = 0;
+//   element.innerHTML = ""; // Limpia el contenido previo
+//   function typeWriter() {
+//     if (i < text.length) {
+//       element.innerHTML += text.charAt(i);
+//       i++;
+//       setTimeout(typeWriter, speed);
+//     }
+//   }
+//   typeWriter();
+// };
 
 const scrollToAboutUs = () => {
   if (aboutUsRef.value) {
@@ -156,16 +156,16 @@ const animatedNumber2 = ref(0);
 const number1 = ref(null);
 const number2 = ref(null);
 
-const textsToType = [
-  {
-    id: "typingText1",
-    text: `Carlos y Eric, amigos y chefs apasionados, te invitamos a disfrutar de una experiencia única a cocina vista donde cada plato refleja creatividad y amor por la cocina.`,
-  },
-  {
-    id: "typingText2",
-    text: `Nuestros orígenes se remontan a un humilde garaje, el único local disponible, donde Carlos y Eric comenzaron su sueño de crear algo único en la cocina.`,
-  },
-];
+// const textsToType = [
+//   {
+//     id: "typingText1",
+//     text: `Carlos y Eric, amigos y chefs apasionados, te invitamos a disfrutar de una experiencia única a cocina vista donde cada plato refleja creatividad y amor por la cocina.`,
+//   },
+//   {
+//     id: "typingText2",
+//     text: `Nuestros orígenes se remontan a un humilde garaje, el único local disponible, donde Carlos y Eric comenzaron su sueño de crear algo único en la cocina.`,
+//   },
+// ];
 
 onMounted(() => {
   nextTick(() => {
@@ -192,22 +192,19 @@ onMounted(() => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Aplica el efecto solo a los elementos visibles
-            const element = entry.target;
-            const textObj = textsToType.find((obj) => obj.id === element.id);
-            if (textObj) {
-              typingEffect(element, textObj.text);
-              observer.unobserve(entry.target); // Deja de observar después de activar
-            }
+            // La sección entra en la vista
+            entry.target.classList.add("visible");
+          } else {
+            // La sección sale de la vista
+            entry.target.classList.remove("visible");
           }
         });
       },
-      { threshold: 1.0 } // Solo cuando está completamente visible
+      { threshold: 0.1 } // Ajusta el umbral según necesites
     );
-    textsToType.forEach((textObj) => {
-      const element = document.getElementById(textObj.id);
-      if (element) observer3.observe(element);
-    });
+
+    if (aboutUsRef.value) observer3.observe(aboutUsRef.value);
+    if (historyRef.value) observer3.observe(historyRef.value);
   });
 
   window.addEventListener("headerreservation", scrollToReservation);
@@ -258,14 +255,22 @@ onUnmounted(() => {
       </section>
     </section>
 
-    <section class="about-us full-page" ref="aboutUsRef">
+    <section class="about-us full-page fade-in-content" ref="aboutUsRef">
       <p class="title-test" ref="titleAboutUsRef">Conocenos</p>
-      <p id="typingText1" class="bottom-text typingEffect"></p>
+      <p class="bottom-text">
+        Carlos y Eric, amigos y chefs apasionados, te invitamos a disfrutar de
+        una experiencia única a cocina vista donde cada plato refleja
+        creatividad y amor por la cocina.
+      </p>
     </section>
 
-    <section class="history full-page" ref="historyRef">
+    <section class="history full-page fade-in-content" ref="historyRef">
       <p class="title-test" ref="titleHistoryRef">Origenes</p>
-      <p id="typingText2" class="bottom-text"></p>
+      <p class="bottom-text">
+        Nuestros orígenes se remontan a un humilde garaje, el único local
+        disponible, donde Carlos y Eric comenzaron su sueño de crear algo único
+        en la cocina.
+      </p>
     </section>
 
     <section
@@ -469,14 +474,11 @@ onUnmounted(() => {
   }
 }
 
-.fade-in {
+.fade-in-content {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-
+  transition: opacity 1s ease-in-out;
   &.visible {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 </style>
