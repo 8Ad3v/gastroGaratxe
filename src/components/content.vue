@@ -203,19 +203,14 @@ onUnmounted(() => {
   }
 });
 ///new carrousel
-import image1 from "../assets/food/food7.jpg";
-import image2 from "../assets/food/food8.jpg";
-import image3 from "../assets/food/food9.jpg";
-import image4 from "../assets/food/food10.jpg";
-import image5 from "../assets/food/food11.jpg";
+import image1 from "../assets/food/food1.jpg";
+import image2 from "../assets/food/food2.jpg";
+import image3 from "../assets/food/food3.jpg";
+import image4 from "../assets/food/food4.jpg";
+import image5 from "../assets/food/food5.jpg";
+import image6 from "../assets/food/food6.jpg";
 import carou from "../components/carou/Carou.vue";
-const slides = ref([
-  image1,
-  image2,
-  image3,
-  image4,
-  image5, // Agrega las imágenes restantes
-]);
+const slides = ref([image1, image2, image3, image4, image5, image6]);
 </script>
 
 <template>
@@ -255,18 +250,21 @@ const slides = ref([
     <section class="about-us full-page fade-in-content" ref="aboutUsRef">
       <p class="title-test" ref="titleAboutUsRef">Conocenos</p>
       <p class="bottom-text">
-        Carlos y Eric, amigos y chefs apasionados, te invitamos a disfrutar de
-        una experiencia única a cocina vista donde cada plato refleja
-        creatividad y amor por la cocina.
+        Carlos y Eric, con experiencia en restaurantes de renombre como Martín
+        Berasategui, Jordi Vilà y Albert Adrià, consolidaron su amistad en
+        LLuerna, trabajando juntos durante un largo período. Tras seguir caminos
+        separados, decidieron unir sus talentos para crear
+        <strong>Gastrogartxe</strong>, un concepto único.
       </p>
     </section>
 
     <section class="history full-page fade-in-content" ref="historyRef">
       <p class="title-test" ref="titleHistoryRef">Origenes</p>
       <p class="bottom-text">
-        Nuestros orígenes se remontan a un humilde garaje, el único local
-        disponible, donde Carlos y Eric comenzaron su sueño de crear algo único
-        en la cocina.
+        Gastrogartxe comenzó en un garaje en L'Hospitalet de Llobregat, nuestro
+        único espacio accesible: una barra de 8 comensales y 11 pases, creados
+        por dos chefs. Ahora, nos hemos trasladado al Prat de Llobregat,
+        conservando el concepto y la esencia original.
       </p>
     </section>
 
@@ -281,8 +279,8 @@ const slides = ref([
           Carta de vinos<span><img :src="openEXT" /></span>
         </button>
       </div>
-      <div class="menu-images fade-in">
-        <carou :slides="slides" :interval="3000" controls indicators></carou>
+      <div class="menu-images">
+        <carou :slides="slides" :interval="4000"></carou>
       </div>
 
       <div class="food-menu-info fade-in">
@@ -301,7 +299,7 @@ const slides = ref([
         />
 
         <div class="food-menu-info-steps price">
-          <p>65€</p>
+          <p>75€</p>
           <p>(IVA incluido)</p>
         </div>
       </div>
@@ -351,10 +349,10 @@ const slides = ref([
     scroll-snap-align: start;
 
     .bottom-text {
-      font-size: 5vw;
+      font-size: 4.5vw;
       bottom: 0;
       width: 100%; /* Ajusta el ancho al del contenedor padre */
-      text-align: left;
+      text-align: justify;
       color: white; /* Cambia el color del texto a blanco */
       font-family: "Orbitron", sans-serif; /* Aplicar el estilo de fuente */
     }
@@ -418,6 +416,8 @@ const slides = ref([
       overflow: hidden;
       position: absolute;
       left: 0;
+      display: flex;
+      justify-content: center;
       margin-top: 20%;
     }
     .wine-btn {

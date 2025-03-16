@@ -16,8 +16,8 @@ const waitForVideosToLoad = async (videos) => {
     return new Promise((resolve) => {
       const video = document.createElement("video");
       video.src = videoUrl;
-      video.onloadeddata = () => resolve();
-      video.onerror = () => resolve(); // Resolver incluso si ocurre un error
+      video.onloadedmetadata = () => resolve(); // Cambiado a onloadedmetadata
+      video.onerror = () => resolve();
     });
   };
 
@@ -34,17 +34,21 @@ const checkAspectRatio = () => {
 
 onMounted(async () => {
   checkAspectRatio();
-  window.addEventListener("resize", checkAspectRatio); // Escuchar cambios de tamaño
+  window.addEventListener("resize", checkAspectRatio);
 
-  // Esperar a que se carguen los videos del store
-  await waitForVideosToLoad([
-    bgStore.vidHome,
-    bgStore.vidAboutUs,
-    bgStore.actVid,
+  await Promise.race([
+    waitForVideosToLoad([bgStore.vidHome, bgStore.vidAboutUs, bgStore.actVid]),
+    new Promise((resolve) => setTimeout(resolve, 5000)), // Timeout de 5 segundos
   ]);
 
-  // Desactivar el preloader
   preloaderActive.value = false;
+
+  if (!preloaderActive.value) {
+    requestAnimationFrame(() => {
+      document.querySelector(".preloader-test").style.transform =
+        "translateY(-100%)";
+    });
+  }
 });
 </script>
 
@@ -72,14 +76,17 @@ onMounted(async () => {
 
 .preloader-test {
   max-width: 100%;
-  height: 100dvh;
+  height: 100vh;
   position: absolute;
   top: 0;
   z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 2s ease, opacity 2s ease;
+  transition: transform 2.1s ease-out 0.1s, opacity 2s ease;
+
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .preloader-test img {
@@ -88,7 +95,8 @@ onMounted(async () => {
 }
 
 .preloader-exit {
-  transform: translateY(-100%); /* Mueve hacia arriba */
+  -webkit-transform: translateY(-100%);
+  transform: translateY(-100%);
 }
 
 .horizontal-warning {
