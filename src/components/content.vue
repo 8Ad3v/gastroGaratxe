@@ -3,6 +3,8 @@ import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useMenuStore } from "@/stores/menuStore"; // Asegúrate de que la ruta del store sea correcta
 import { useBgStore } from "@/stores/BgStore"; // Asegúrate de que la ruta del store sea correcta
 import Carousel from "@/components/Carousel.vue";
+import vinelist from "/src/assets/document/winelist.pdf";
+import openEXT from "/src/assets/icons/openEXT.svg";
 
 const homeRef = ref(null);
 const aboutUsRef = ref(null);
@@ -20,19 +22,6 @@ const reserveButtonRef = ref(null);
 
 const menuStore = useMenuStore();
 const BgStore = useBgStore();
-
-// const typingEffect = (element, text, speed = 20) => {
-//   let i = 0;
-//   element.innerHTML = ""; // Limpia el contenido previo
-//   function typeWriter() {
-//     if (i < text.length) {
-//       element.innerHTML += text.charAt(i);
-//       i++;
-//       setTimeout(typeWriter, speed);
-//     }
-//   }
-//   typeWriter();
-// };
 
 const scrollToAboutUs = () => {
   if (aboutUsRef.value) {
@@ -146,26 +135,17 @@ function animateNumber(finalValue, currentNumber, duration = 2000) {
   requestAnimationFrame(updateAnimation);
 }
 const targetNumber1 = 11; // Número final del primer <p>
-const targetNumber2 = 60; // Número final del segundo <p>
 
 // Números animados
 const animatedNumber1 = ref(0);
-const animatedNumber2 = ref(0);
 
 // Referencias para los elementos
 const number1 = ref(null);
 const number2 = ref(null);
 
-// const textsToType = [
-//   {
-//     id: "typingText1",
-//     text: `Carlos y Eric, amigos y chefs apasionados, te invitamos a disfrutar de una experiencia única a cocina vista donde cada plato refleja creatividad y amor por la cocina.`,
-//   },
-//   {
-//     id: "typingText2",
-//     text: `Nuestros orígenes se remontan a un humilde garaje, el único local disponible, donde Carlos y Eric comenzaron su sueño de crear algo único en la cocina.`,
-//   },
-// ];
+const openWineList = () => {
+  window.open(vinelist, "_blank");
+};
 
 onMounted(() => {
   nextTick(() => {
@@ -222,6 +202,20 @@ onUnmounted(() => {
     titleObserver.disconnect();
   }
 });
+///new carrousel
+import image1 from "../assets/food/food7.jpg";
+import image2 from "../assets/food/food8.jpg";
+import image3 from "../assets/food/food9.jpg";
+import image4 from "../assets/food/food10.jpg";
+import image5 from "../assets/food/food11.jpg";
+import carou from "../components/carou/Carou.vue";
+const slides = ref([
+  image1,
+  image2,
+  image3,
+  image4,
+  image5, // Agrega las imágenes restantes
+]);
 </script>
 
 <template>
@@ -243,6 +237,9 @@ onUnmounted(() => {
         </button>
         <button @click="scrollToMenu" class="home-menu-container-lightButton">
           Menu
+        </button>
+        <button @click="openWineList()" class="home-menu-container-lightButton">
+          Bodega<span><img :src="openEXT" /></span>
         </button>
         <button
           @click="scrollToReservation"
@@ -278,9 +275,14 @@ onUnmounted(() => {
       style="background-color: black"
       ref="foodMenuRef"
     >
-      <p class="title-test" ref="titleMenuRef">Menu</p>
+      <div style="display: flex; justify-content: space-between">
+        <p class="title-test" ref="titleMenuRef">Menu</p>
+        <button class="wine-btn" @click="openWineList()">
+          Carta de vinos<span><img :src="openEXT" /></span>
+        </button>
+      </div>
       <div class="menu-images fade-in">
-        <Carousel />
+        <carou :slides="slides" :interval="3000" controls indicators></carou>
       </div>
 
       <div class="food-menu-info fade-in">
@@ -297,10 +299,6 @@ onUnmounted(() => {
             background-color: white;
           "
         />
-        <div class="food-menu-info-steps">
-          <p ref="number2">{{ animatedNumber2 }}</p>
-          <p>ingredientes</p>
-        </div>
 
         <div class="food-menu-info-steps price">
           <p>65€</p>
@@ -386,6 +384,14 @@ onUnmounted(() => {
         grid-column: span 2;
         cursor: pointer;
         background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        span {
+          width: 1em;
+          height: 1em;
+          filter: invert(1);
+        }
       }
       .reserve-button {
         grid-column: span 2;
@@ -413,6 +419,21 @@ onUnmounted(() => {
       position: absolute;
       left: 0;
       margin-top: 20%;
+    }
+    .wine-btn {
+      font-family: "Orbitron", sans-serif;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      background-color: transparent;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      span {
+        width: 1em;
+        height: 1em;
+        filter: invert(1);
+      }
     }
 
     &-info {

@@ -1,104 +1,34 @@
-<!-- <template>
-  <section style="height: 100%">
-    <article :class="{ paused: isPaused }" style="height: 100%">
-      <div style="height: 100%">
-        <ul style="height: 100%">
-          <li><img src="/src/assets/food/food1.jpg" /></li>
-          <li><img src="/src/assets/food/food2.jpg" /></li>
-          <li><img src="/src/assets/food/food3.jpg" /></li>
-          <li><img src="/src/assets/food/food4.jpg" /></li>
-        </ul>
-      </div>
-      <div style="height: 100%">
-        <ul style="height: 100%">
-          <li><img src="/src/assets/food/food1.jpg" /></li>
-          <li><img src="/src/assets/food/food2.jpg" /></li>
-          <li><img src="/src/assets/food/food3.jpg" /></li>
-          <li><img src="/src/assets/food/food4.jpg" /></li>
-        </ul>
-      </div>
-    </article>
-  </section>
-</template>
-
 <script setup>
-import { ref } from "vue";
-
-// Definimos el estado pausado
-const isPaused = ref(false);
-
-// Función para alternar el estado de pausa
-const togglePause = () => {
-  isPaused.value = !isPaused.value;
-};
+import food8 from "/src/assets/food/food8.jpg";
+import food7 from "/src/assets/food/food7.jpg";
+import food9 from "/src/assets/food/food9.jpg";
+import food10 from "/src/assets/food/food10.jpg";
+import food11 from "/src/assets/food/food11.jpg";
+import food12 from "/src/assets/food/food12.jpg";
 </script>
 
-<style scoped lang="scss">
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ajustar las imágenes al tamaño del contenedor sin deformarlas */
-  display: block;
-}
-
-section {
-  width: 100%;
-  overflow: hidden;
-}
-
-article {
-  display: flex;
-  width: 200%;
-  animation: bannermove 20s linear infinite;
-}
-
-div {
-  width: 100%;
-}
-
-ul {
-  display: flex;
-  list-style-type: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-li {
-  width: 100%;
-  margin-left: 20px;
-}
-
-@keyframes bannermove {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-</style> -->
 <template>
   <section class="slide-option" style="overflow: hidden">
     <div id="infinite" class="highway-slider">
       <div class="container highway-barrier">
         <ul class="highway-lane">
           <li class="highway-car">
-            <img src="/src/assets/food/food8.jpg" class="slider-img" />
+            <img :src="food8" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food7.jpg" class="slider-img" />
+            <img :src="food7" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food9.jpg" class="slider-img" />
+            <img :src="food9" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food10.jpg" class="slider-img" />
+            <img :src="food10" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food11.jpg" class="slider-img" />
+            <img :src="food11" class="slider-img" />
           </li>
           <li class="highway-car">
-            <img src="/src/assets/food/food12.jpg" class="slider-img" />
+            <img :src="food12" class="slider-img" />
           </li>
         </ul>
       </div>
@@ -183,7 +113,6 @@ div.highway-slider {
     content: " ";
     position: absolute;
     z-index: 9;
-    width: 180px;
     height: 100%;
   }
   &::before {
