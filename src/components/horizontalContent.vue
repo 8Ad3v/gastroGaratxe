@@ -29,9 +29,9 @@ watch(
 </script>
 
 <template>
-  <div class="horizontalContainer">
-    <!-- Parte derecha: Contenedor del video -->
-    <div class="video-container">
+  <!-- <div class="horizontalContainer"> -->
+  <!-- Parte derecha: Contenedor del video -->
+  <!-- <div class="video-container">
       <div class="overlay" :class="{ active: isTransitioning }"></div>
       <video class="video" :src="currentVideo" autoplay muted loop></video>
     </div>
@@ -40,7 +40,22 @@ watch(
       <hheader></hheader>
       <hinfo></hinfo>
       <hinfo2></hinfo2>
-    </div>
+    </div> -->
+  <!-- </div> -->
+  <div
+    style="
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background-color: black;
+    "
+  >
+    <p class="middle-text">
+      Para disfrutar la experiencia de esta web, entra con un dispositivo con
+      orientación de pantalla vertical
+    </p>
   </div>
 </template>
 
@@ -138,5 +153,14 @@ watch(
     opacity: 0; // Invisible
     transform: translateY(20px); // Desplazado hacia abajo
   }
+}
+.middle-text {
+  font-size: 2.5rem;
+  text-align: center;
+  width: 80%;
+  font-family: "Orbitron", sans-serif;
+
+  line-height: 1.5;
+  color: rgb(228, 228, 228);
 }
 </style>

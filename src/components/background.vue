@@ -4,6 +4,9 @@ import { useBgStore } from "@/stores/BgStore";
 
 const BgStore = useBgStore();
 const videoSource = ref(BgStore.actVid);
+const videoSourceNEW = ref(
+  new URL("@/assets/vid/vidbg.mp4", import.meta.url).href
+);
 const videoElement = ref(null);
 const fadeOverlay = ref(null);
 
@@ -72,8 +75,15 @@ onMounted(() => {
   <header>
     <div class="difusor"></div>
     <div class="fade-overlay" ref="fadeOverlay"></div>
-    <video class="parallax" ref="videoElement" muted loop>
-      <source :src="videoSource" type="video/mp4" />
+    <video
+      class="parallax"
+      ref="videoElement"
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+      <source :src="videoSourceNEW" type="video/mp4" />
       Tu navegador no soporta la reproducción de videos.
     </video>
   </header>

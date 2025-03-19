@@ -222,16 +222,16 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
           @click="scrollToAboutUs"
           class="home-menu-container-lightButton"
         >
-          Conocenos
+          Conócenos
         </button>
         <button
           @click="scrollToHistory"
           class="home-menu-container-lightButton"
         >
-          Origenes
+          Orígenes
         </button>
         <button @click="scrollToMenu" class="home-menu-container-lightButton">
-          Menu
+          Menú
         </button>
         <button @click="openWineList()" class="home-menu-container-lightButton">
           Bodega<span><img :src="openEXT" /></span>
@@ -248,7 +248,7 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
     </section>
 
     <section class="about-us full-page fade-in-content" ref="aboutUsRef">
-      <p class="title-test" ref="titleAboutUsRef">Conocenos</p>
+      <p class="title-test" ref="titleAboutUsRef">Conócenos</p>
       <p class="bottom-text">
         Carlos y Eric, con experiencia en restaurantes de renombre como Martín
         Berasategui, Jordi Vilà y Albert Adrià, consolidaron su amistad en
@@ -259,7 +259,7 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
     </section>
 
     <section class="history full-page fade-in-content" ref="historyRef">
-      <p class="title-test" ref="titleHistoryRef">Origenes</p>
+      <p class="title-test" ref="titleHistoryRef">Orígenes</p>
       <p class="bottom-text">
         Gastrogartxe comenzó en un garaje en L'Hospitalet de Llobregat, nuestro
         único espacio accesible: una barra de 8 comensales y 11 pases, creados
@@ -274,7 +274,7 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       ref="foodMenuRef"
     >
       <div style="display: flex; justify-content: space-between">
-        <p class="title-test" ref="titleMenuRef">Menu</p>
+        <p class="title-test" ref="titleMenuRef">Menú</p>
         <button class="wine-btn" @click="openWineList()">
           Carta de vinos<span><img :src="openEXT" /></span>
         </button>
