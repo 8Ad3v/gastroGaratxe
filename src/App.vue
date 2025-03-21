@@ -7,8 +7,9 @@ import horizontal from "./components/horizontalContent.vue";
 import content from "./components/content.vue";
 
 const preloaderActive = ref(true);
-const showHorizontalWarning = ref(false); // Mostrar el mensaje de advertencia
+const showHorizontalWarning = ref(false);
 const bgStore = useBgStore();
+const allElementsLoaded = ref(false); // Nuevo ref para indicar si todos los elementos están cargados
 
 // Función para esperar a que los videos se carguen
 const waitForVideosToLoad = async (videos) => {
@@ -16,8 +17,8 @@ const waitForVideosToLoad = async (videos) => {
     return new Promise((resolve) => {
       const video = document.createElement("video");
       video.src = videoUrl;
-      video.onloadeddata = () => resolve();
-      video.onerror = () => resolve(); // Resolver incluso si ocurre un error
+      video.onloadedmetadata = () => resolve();
+      video.onerror = () => resolve();
     });
   };
 
@@ -29,22 +30,44 @@ const waitForVideosToLoad = async (videos) => {
 const checkAspectRatio = () => {
   const width = window.innerWidth;
   const height = window.innerHeight;
-  showHorizontalWarning.value = width >= height; // Mostrar mensaje si la pantalla es más ancha que alta
+  showHorizontalWarning.value = width >= height;
+};
+
+// Función para esperar a que otros elementos se carguen (puedes ajustarla según tus necesidades)
+const waitForOtherElements = () => {
+  return new Promise((resolve) => {
+    // Aquí puedes agregar lógica para verificar si otros elementos están cargados
+    // Por ejemplo, puedes verificar si ciertas imágenes están cargadas o si ciertos componentes están montados
+    // Para simplificar, asumiremos que todos los elementos están cargados después de un pequeño retraso
+    setTimeout(() => {
+      resolve();
+    }, 1000); // Ajusta el tiempo según sea necesario
+  });
 };
 
 onMounted(async () => {
   checkAspectRatio();
-  window.addEventListener("resize", checkAspectRatio); // Escuchar cambios de tamaño
+  window.addEventListener("resize", checkAspectRatio);
 
-  // Esperar a que se carguen los videos del store
-  await waitForVideosToLoad([
-    bgStore.vidHome,
-    bgStore.vidAboutUs,
-    bgStore.actVid,
+  // Esperar a que los videos se carguen
+  await Promise.race([
+    waitForVideosToLoad([bgStore.vidHome, bgStore.vidAboutUs, bgStore.actVid]),
+    new Promise((resolve) => setTimeout(resolve, 5000)), // Timeout de 5 segundos
   ]);
 
-  // Desactivar el preloader
-  preloaderActive.value = false;
+  // Esperar a que otros elementos se carguen
+  await waitForOtherElements();
+
+  allElementsLoaded.value = true; // Indicar que todos los elementos están cargados
+
+  // Retraso de 2 segundos antes de ocultar el preloader
+  setTimeout(() => {
+    preloaderActive.value = false;
+    requestAnimationFrame(() => {
+      document.querySelector(".preloader-test").style.transform =
+        "translateY(-100%)";
+    });
+  }, 2000); // Retraso de 2 segundos
 });
 </script>
 
@@ -72,14 +95,17 @@ onMounted(async () => {
 
 .preloader-test {
   max-width: 100%;
-  height: 100dvh;
+  height: 100vh;
   position: absolute;
   top: 0;
   z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 2s ease, opacity 2s ease;
+  transition: transform 2.1s ease-out 0.1s, opacity 2s ease;
+
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .preloader-test img {
@@ -88,7 +114,8 @@ onMounted(async () => {
 }
 
 .preloader-exit {
-  transform: translateY(-100%); /* Mueve hacia arriba */
+  -webkit-transform: translateY(-100%);
+  transform: translateY(-100%);
 }
 
 .horizontal-warning {

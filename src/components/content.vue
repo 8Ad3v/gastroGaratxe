@@ -3,6 +3,8 @@ import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useMenuStore } from "@/stores/menuStore"; // Asegúrate de que la ruta del store sea correcta
 import { useBgStore } from "@/stores/BgStore"; // Asegúrate de que la ruta del store sea correcta
 import Carousel from "@/components/Carousel.vue";
+import vinelist from "/src/assets/document/winelist.pdf";
+import openEXT from "/src/assets/icons/openEXT.svg";
 
 const homeRef = ref(null);
 const aboutUsRef = ref(null);
@@ -20,19 +22,6 @@ const reserveButtonRef = ref(null);
 
 const menuStore = useMenuStore();
 const BgStore = useBgStore();
-
-const typingEffect = (element, text, speed = 20) => {
-  let i = 0;
-  element.innerHTML = ""; // Limpia el contenido previo
-  function typeWriter() {
-    if (i < text.length) {
-      element.innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typeWriter, speed);
-    }
-  }
-  typeWriter();
-};
 
 const scrollToAboutUs = () => {
   if (aboutUsRef.value) {
@@ -66,7 +55,6 @@ const observer = new IntersectionObserver(
       if (entry.target.id === "reserve-button-home") {
         const isVisible = entry.isIntersecting;
         menuStore.isInHomePage = isVisible;
-        console.log("isInHomePage:", isVisible);
       }
     });
   },
@@ -90,7 +78,6 @@ const handleIntersection = (entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       // Imprimir en consola el texto del <p> que está en pantalla
-      console.log(`Visible: ${entry.target.textContent}`);
       BgStore.changeSection(entry.target.textContent);
     }
   });
@@ -110,7 +97,6 @@ const createObserver = () => {
     });
 
     // Observar cada uno de los elementos <p>
-    console.log("Observing elements:");
     [
       titleGastroRef,
       titleAboutUsRef,
@@ -119,10 +105,8 @@ const createObserver = () => {
       titleReservationRef,
     ].forEach((ref) => {
       if (ref.value) {
-        console.log("Observing:", ref.value.textContent);
         titleObserver.observe(ref.value);
       } else {
-        console.log("Ref is null");
       }
     });
   } else {
@@ -146,26 +130,17 @@ function animateNumber(finalValue, currentNumber, duration = 2000) {
   requestAnimationFrame(updateAnimation);
 }
 const targetNumber1 = 11; // Número final del primer <p>
-const targetNumber2 = 60; // Número final del segundo <p>
 
 // Números animados
 const animatedNumber1 = ref(0);
-const animatedNumber2 = ref(0);
 
 // Referencias para los elementos
 const number1 = ref(null);
 const number2 = ref(null);
 
-const textsToType = [
-  {
-    id: "typingText1",
-    text: `Carlos y Eric, amigos y chefs apasionados, te invitamos a disfrutar de una experiencia única a cocina vista donde cada plato refleja creatividad y amor por la cocina.`,
-  },
-  {
-    id: "typingText2",
-    text: `Nuestros orígenes se remontan a un humilde garaje, el único local disponible, donde Carlos y Eric comenzaron su sueño de crear algo único en la cocina.`,
-  },
-];
+const openWineList = () => {
+  window.open(vinelist, "_blank");
+};
 
 onMounted(() => {
   nextTick(() => {
@@ -192,22 +167,19 @@ onMounted(() => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Aplica el efecto solo a los elementos visibles
-            const element = entry.target;
-            const textObj = textsToType.find((obj) => obj.id === element.id);
-            if (textObj) {
-              typingEffect(element, textObj.text);
-              observer.unobserve(entry.target); // Deja de observar después de activar
-            }
+            // La sección entra en la vista
+            entry.target.classList.add("visible");
+          } else {
+            // La sección sale de la vista
+            entry.target.classList.remove("visible");
           }
         });
       },
-      { threshold: 1.0 } // Solo cuando está completamente visible
+      { threshold: 0.1 } // Ajusta el umbral según necesites
     );
-    textsToType.forEach((textObj) => {
-      const element = document.getElementById(textObj.id);
-      if (element) observer3.observe(element);
-    });
+
+    if (aboutUsRef.value) observer3.observe(aboutUsRef.value);
+    if (historyRef.value) observer3.observe(historyRef.value);
   });
 
   window.addEventListener("headerreservation", scrollToReservation);
@@ -225,6 +197,15 @@ onUnmounted(() => {
     titleObserver.disconnect();
   }
 });
+///new carrousel
+import image1 from "../assets/food/food1.jpg";
+import image2 from "../assets/food/food2.jpg";
+import image3 from "../assets/food/food3.jpg";
+import image4 from "../assets/food/food4.jpg";
+import image5 from "../assets/food/food5.jpg";
+import image6 from "../assets/food/food6.jpg";
+import carou from "../components/carou/Carou.vue";
+const slides = ref([image1, image2, image3, image4, image5, image6]);
 </script>
 
 <template>
@@ -236,16 +217,19 @@ onUnmounted(() => {
           @click="scrollToAboutUs"
           class="home-menu-container-lightButton"
         >
-          Conocenos
+          Conócenos
         </button>
         <button
           @click="scrollToHistory"
           class="home-menu-container-lightButton"
         >
-          Origenes
+          Orígenes
         </button>
         <button @click="scrollToMenu" class="home-menu-container-lightButton">
-          Menu
+          Menú
+        </button>
+        <button @click="openWineList()" class="home-menu-container-lightButton">
+          Bodega<span><img :src="openEXT" /></span>
         </button>
         <button
           @click="scrollToReservation"
@@ -258,14 +242,25 @@ onUnmounted(() => {
       </section>
     </section>
 
-    <section class="about-us full-page" ref="aboutUsRef">
-      <p class="title-test" ref="titleAboutUsRef">Conocenos</p>
-      <p id="typingText1" class="bottom-text typingEffect"></p>
+    <section class="about-us full-page fade-in-content" ref="aboutUsRef">
+      <p class="title-test" ref="titleAboutUsRef">Conócenos</p>
+      <p class="bottom-text">
+        Carlos y Eric, con experiencia en restaurantes de renombre como Martín
+        Berasategui, Jordi Vilà y Albert Adrià, consolidaron su amistad en
+        LLuerna, trabajando juntos durante un largo período. Tras seguir caminos
+        separados, decidieron unir sus talentos para crear
+        <strong>Gastrogartxe</strong>, un concepto único.
+      </p>
     </section>
 
-    <section class="history full-page" ref="historyRef">
-      <p class="title-test" ref="titleHistoryRef">Origenes</p>
-      <p id="typingText2" class="bottom-text"></p>
+    <section class="history full-page fade-in-content" ref="historyRef">
+      <p class="title-test" ref="titleHistoryRef">Orígenes</p>
+      <p class="bottom-text">
+        Gastrogartxe comenzó en un garaje en L'Hospitalet de Llobregat, nuestro
+        único espacio accesible: una barra de 8 comensales y 11 pases, creados
+        por dos chefs. Ahora, nos hemos trasladado al Prat de Llobregat,
+        conservando el concepto y la esencia original.
+      </p>
     </section>
 
     <section
@@ -273,9 +268,14 @@ onUnmounted(() => {
       style="background-color: black"
       ref="foodMenuRef"
     >
-      <p class="title-test" ref="titleMenuRef">Menu</p>
-      <div class="menu-images fade-in">
-        <Carousel />
+      <div style="display: flex; justify-content: space-between">
+        <p class="title-test" ref="titleMenuRef">Menú</p>
+        <button class="wine-btn" @click="openWineList()">
+          Carta de vinos<span><img :src="openEXT" /></span>
+        </button>
+      </div>
+      <div class="menu-images">
+        <carou :slides="slides" :interval="4000"></carou>
       </div>
 
       <div class="food-menu-info fade-in">
@@ -292,13 +292,9 @@ onUnmounted(() => {
             background-color: white;
           "
         />
-        <div class="food-menu-info-steps">
-          <p ref="number2">{{ animatedNumber2 }}</p>
-          <p>ingredientes</p>
-        </div>
 
         <div class="food-menu-info-steps price">
-          <p>65€</p>
+          <p>75€</p>
           <p>(IVA incluido)</p>
         </div>
       </div>
@@ -323,9 +319,8 @@ onUnmounted(() => {
   overflow-y: auto;
   overflow-x: hidden;
 
-  /* Scroll snap configuration */
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth; /* Para que el scroll sea suave */
+  scroll-behavior: smooth;
 
   .title-test {
     z-index: 20;
@@ -348,12 +343,12 @@ onUnmounted(() => {
     scroll-snap-align: start;
 
     .bottom-text {
-      font-size: 5vw;
+      font-size: 4.5vw;
       bottom: 0;
-      width: 100%; /* Ajusta el ancho al del contenedor padre */
-      text-align: left;
-      color: white; /* Cambia el color del texto a blanco */
-      font-family: "Orbitron", sans-serif; /* Aplicar el estilo de fuente */
+      width: 100%;
+      text-align: justify;
+      color: white;
+      font-family: "Orbitron", sans-serif;
     }
   }
 
@@ -381,6 +376,14 @@ onUnmounted(() => {
         grid-column: span 2;
         cursor: pointer;
         background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        span {
+          width: 1em;
+          height: 1em;
+          filter: invert(1);
+        }
       }
       .reserve-button {
         grid-column: span 2;
@@ -407,7 +410,24 @@ onUnmounted(() => {
       overflow: hidden;
       position: absolute;
       left: 0;
+      display: flex;
+      justify-content: center;
       margin-top: 20%;
+    }
+    .wine-btn {
+      font-family: "Orbitron", sans-serif;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      background-color: transparent;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      span {
+        width: 1em;
+        height: 1em;
+        filter: invert(1);
+      }
     }
 
     &-info {
@@ -455,7 +475,7 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   height: 80%;
-  padding-top: 56.25%; /* Proporción 16:9 */
+  padding-top: 56.25%;
   overflow: hidden;
 
   iframe {
@@ -464,19 +484,16 @@ onUnmounted(() => {
     left: 0;
     width: 100%;
     height: 100%;
-    transform: scale(1); /* Ajusta el tamaño global */
-    transform-origin: 0 0; /* Ajusta el punto de origen del escalado */
+    transform: scale(1);
+    transform-origin: 0 0;
   }
 }
 
-.fade-in {
+.fade-in-content {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-
+  transition: opacity 1s ease-in-out;
   &.visible {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 </style>

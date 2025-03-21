@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 // Usamos import.meta.url para resolver las rutas correctamente
-const generalVideo = new URL("@/assets/vid/general.mp4", import.meta.url).href;
+const generalVideo = new URL("@/assets/vid/vidbg.mp4", import.meta.url).href;
 const sobreNosVideo = new URL("@/assets/vid/sobrenos.mp4", import.meta.url)
   .href;
 const historiaVideo = new URL("@/assets/vid/hist.mp4", import.meta.url).href;
@@ -15,7 +15,6 @@ export const useBgStore = defineStore("BgStore", {
   }),
   actions: {
     changeSection(newSection) {
-      console.log("section: " + newSection);
       if (newSection === "GastroGaratxe") {
         this.section = 1;
         this.actVid = generalVideo;
@@ -32,8 +31,6 @@ export const useBgStore = defineStore("BgStore", {
         this.section = 5;
         // Agregar la ruta del video si aplica
       }
-      console.log(this.section);
-      console.log(this.actVid);
     },
   },
 });
