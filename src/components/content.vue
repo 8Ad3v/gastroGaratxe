@@ -55,7 +55,6 @@ const observer = new IntersectionObserver(
       if (entry.target.id === "reserve-button-home") {
         const isVisible = entry.isIntersecting;
         menuStore.isInHomePage = isVisible;
-        console.log("isInHomePage:", isVisible);
       }
     });
   },
@@ -79,7 +78,6 @@ const handleIntersection = (entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       // Imprimir en consola el texto del <p> que está en pantalla
-      console.log(`Visible: ${entry.target.textContent}`);
       BgStore.changeSection(entry.target.textContent);
     }
   });
@@ -99,7 +97,6 @@ const createObserver = () => {
     });
 
     // Observar cada uno de los elementos <p>
-    console.log("Observing elements:");
     [
       titleGastroRef,
       titleAboutUsRef,
@@ -108,10 +105,8 @@ const createObserver = () => {
       titleReservationRef,
     ].forEach((ref) => {
       if (ref.value) {
-        console.log("Observing:", ref.value.textContent);
         titleObserver.observe(ref.value);
       } else {
-        console.log("Ref is null");
       }
     });
   } else {
@@ -324,9 +319,8 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
   overflow-y: auto;
   overflow-x: hidden;
 
-  /* Scroll snap configuration */
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth; /* Para que el scroll sea suave */
+  scroll-behavior: smooth;
 
   .title-test {
     z-index: 20;
@@ -351,10 +345,10 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
     .bottom-text {
       font-size: 4.5vw;
       bottom: 0;
-      width: 100%; /* Ajusta el ancho al del contenedor padre */
+      width: 100%;
       text-align: justify;
-      color: white; /* Cambia el color del texto a blanco */
-      font-family: "Orbitron", sans-serif; /* Aplicar el estilo de fuente */
+      color: white;
+      font-family: "Orbitron", sans-serif;
     }
   }
 
@@ -481,7 +475,7 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
   position: relative;
   width: 100%;
   height: 80%;
-  padding-top: 56.25%; /* Proporción 16:9 */
+  padding-top: 56.25%;
   overflow: hidden;
 
   iframe {
@@ -490,8 +484,8 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
     left: 0;
     width: 100%;
     height: 100%;
-    transform: scale(1); /* Ajusta el tamaño global */
-    transform-origin: 0 0; /* Ajusta el punto de origen del escalado */
+    transform: scale(1);
+    transform-origin: 0 0;
   }
 }
 

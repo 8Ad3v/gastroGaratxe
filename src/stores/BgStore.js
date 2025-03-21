@@ -15,7 +15,6 @@ export const useBgStore = defineStore("BgStore", {
   }),
   actions: {
     changeSection(newSection) {
-      console.log("section: " + newSection);
       if (newSection === "GastroGaratxe") {
         this.section = 1;
         this.actVid = generalVideo;
@@ -32,8 +31,6 @@ export const useBgStore = defineStore("BgStore", {
         this.section = 5;
         // Agregar la ruta del video si aplica
       }
-      console.log(this.section);
-      console.log(this.actVid);
     },
   },
 });

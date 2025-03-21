@@ -29,19 +29,6 @@ watch(
 </script>
 
 <template>
-  <!-- <div class="horizontalContainer"> -->
-  <!-- Parte derecha: Contenedor del video -->
-  <!-- <div class="video-container">
-      <div class="overlay" :class="{ active: isTransitioning }"></div>
-      <video class="video" :src="currentVideo" autoplay muted loop></video>
-    </div>
-
-    <div class="content">
-      <hheader></hheader>
-      <hinfo></hinfo>
-      <hinfo2></hinfo2>
-    </div> -->
-  <!-- </div> -->
   <div
     style="
       width: 100vw;

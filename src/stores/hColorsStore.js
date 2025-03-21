@@ -8,7 +8,6 @@ export const useColorStore = defineStore("ColorStore", {
   actions: {
     // Método para cambiar los colores
     changeColors(newTextColor, newBackgroundColor) {
-      console.log("changingColors");
       this.textColor = newTextColor;
       this.backgroundColor = newBackgroundColor;
 
