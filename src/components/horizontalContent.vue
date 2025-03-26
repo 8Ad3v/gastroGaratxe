@@ -1,8 +1,6 @@
 <script setup>
 import { ref, watch } from "vue";
-import hheader from "@/components/h-components/h-header.vue";
-import hinfo from "@/components/h-components/h-info.vue";
-import hinfo2 from "@/components/h-components/h-info2.vue";
+
 import { useColorStore } from "@/stores/hColorsStore.js";
 import { useBgStore } from "@/stores/BgStore.js";
 
@@ -12,50 +10,27 @@ const bgStore = useBgStore();
 // Estado reactivo para manejar la transición del video
 const isTransitioning = ref(false); // Estado para la clase de transición
 const currentVideo = ref(bgStore.actVid); // Video actual
-
-// Verificar cambios en el video
-watch(
-  () => bgStore.actVid,
-  (newVideo) => {
-    isTransitioning.value = true; // Activa la transición
-    setTimeout(() => {
-      currentVideo.value = newVideo; // Cambia el video después de la transición
-      setTimeout(() => {
-        isTransitioning.value = false; // Desactiva la transición
-      }, 100); // Tiempo de la transición (1s)
-    }, 200); // Tiempo para fundir a negro
-  }
+const videoSourceNEW = ref(
+  new URL("@/assets/vid/vidbg.mp4", import.meta.url).href
 );
 </script>
 
 <template>
-  <!-- <div class="horizontalContainer"> -->
-  <!-- Parte derecha: Contenedor del video -->
-  <!-- <div class="video-container">
+  <div class="horizontalContainer">
+    <div class="video-container">
       <div class="overlay" :class="{ active: isTransitioning }"></div>
-      <video class="video" :src="currentVideo" autoplay muted loop></video>
+      <video class="video" :src="videoSourceNEW" autoplay muted loop></video>
     </div>
 
     <div class="content">
-      <hheader></hheader>
-      <hinfo></hinfo>
-      <hinfo2></hinfo2>
-    </div> -->
-  <!-- </div> -->
-  <div
-    style="
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      background-color: black;
-    "
-  >
-    <p class="middle-text">
-      Para disfrutar la experiencia de esta web, entra con un dispositivo con
-      orientación de pantalla vertical
-    </p>
+      <div class="h-menu">
+        <h1>GastroGaratxe</h1>
+        <div><a>Conócenos</a></div>
+        <div><a>Orígenes</a></div>
+        <div><a>Menú</a></div>
+        <div><a>Bodega</a></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -118,10 +93,8 @@ watch(
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth; /* Para que el scroll sea suave */
 
-    p {
-      color: var(--text-color);
-      transition: color 0s ease-in-out;
-    }
+    display: flex;
+    align-items: center;
     .content-body {
       display: flex;
       flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
@@ -141,26 +114,24 @@ watch(
     &::-webkit-scrollbar-thumb:hover {
       background-color: gray;
     }
-  }
 
-  // Clases dinámicas para fade-in y fade-out
-  .fade-in {
-    opacity: 1; // Visible
-    transform: translateY(0); // Posición normal
-  }
+    .h-menu {
+      font-family: "Orbitron", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
 
-  .fade-out {
-    opacity: 0; // Invisible
-    transform: translateY(20px); // Desplazado hacia abajo
-  }
-}
-.middle-text {
-  font-size: 2.5rem;
-  text-align: center;
-  width: 80%;
-  font-family: "Orbitron", sans-serif;
+      h1 {
+        overflow-y: hidden;
+        font-size: 6vw;
+      }
+      a {
+        text-decoration: underline;
+        font-size: 2.5vw;
 
-  line-height: 1.5;
-  color: rgb(228, 228, 228);
+        color: black;
+      }
+    }
+  }
 }
 </style>
