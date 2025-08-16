@@ -11,6 +11,7 @@ const aboutUsRef = ref(null);
 const historyRef = ref(null);
 const foodMenuRef = ref(null);
 const reservationRef = ref(null);
+const contactRef = ref(null);
 
 const titleGastroRef = ref(null);
 const titleAboutUsRef = ref(null);
@@ -147,6 +148,75 @@ const openWineList = () => {
   window.open(vinelist, "_blank");
 };
 
+const scrollToContact = () => {
+  if (contactRef.value) {
+    contactRef.value.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
+const contactName = ref("");
+const contactEmail = ref("");
+const contactMessage = ref("");
+
+const sendContact = async (e) => {
+  e && e.preventDefault();
+
+  // Si existe un endpoint configurado en Vite (por ejemplo Formspree o tu API), enviamos por POST
+  const endpoint = import.meta.env.VITE_FORM_ENDPOINT;
+  if (endpoint) {
+    try {
+      const payload = {
+        name: contactName.value,
+        email: contactEmail.value,
+        message: contactMessage.value,
+        to: "info@gastrogaratxe.com",
+      };
+
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        // limpiar formulario y notificar
+        contactName.value = "";
+        contactEmail.value = "";
+        contactMessage.value = "";
+        alert("Mensaje enviado. Gracias por contactar con GastroGaratxe.");
+        return;
+      } else {
+        const text = await res.text();
+        console.error("Error enviando formulario:", res.status, text);
+        alert(
+          "No se pudo enviar el formulario automáticamente. Se abrirá tu cliente de correo como alternativa."
+        );
+        // proceed to fallback mailto below
+      }
+    } catch (err) {
+      console.error("Error en fetch:", err);
+      alert(
+        "Error al enviar el formulario. Se abrirá tu cliente de correo como alternativa."
+      );
+      // fallback to mailto
+    }
+  }
+
+  // Fallback: abrir cliente de correo con mailto
+  const subject = encodeURIComponent("Contacto - GastroGaratxe");
+  const bodyLines = [
+    `Nombre: ${contactName.value}`,
+    `Email: ${contactEmail.value}`,
+    "",
+    contactMessage.value,
+  ];
+  const body = encodeURIComponent(bodyLines.join("\n"));
+  const mailto = `mailto:info@gastrogaratxe.com?subject=${subject}&body=${body}`;
+  window.location.href = mailto;
+};
+
 onMounted(() => {
   nextTick(() => {
     observeElements();
@@ -188,6 +258,7 @@ onMounted(() => {
   });
 
   window.addEventListener("headerreservation", scrollToReservation);
+  window.addEventListener("headercontact", scrollToContact);
 
   if (reserveButtonRef.value) {
     observer.observe(reserveButtonRef.value);
@@ -201,6 +272,7 @@ onUnmounted(() => {
   if (titleObserver) {
     titleObserver.disconnect();
   }
+  window.removeEventListener("headercontact", scrollToContact);
 });
 ///new carrousel
 import image1 from "../assets/food/food7.jpg";
@@ -313,6 +385,40 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
           src="https://widget.thefork.com/ea84edc5-731d-4fa2-bfa1-0861d546538b"
           allow="payment *"
         ></iframe>
+      </div>
+    </section>
+
+    <section class="contact-section" ref="contactRef">
+      <p class="title-test">Contacto</p>
+      <div class="contact-grid">
+        <form class="contact-form" @submit.prevent="sendContact">
+          <label>
+            Nombre
+            <input type="text" v-model="contactName" required />
+          </label>
+          <label>
+            Email
+            <input type="email" v-model="contactEmail" required />
+          </label>
+          <label>
+            Mensaje
+            <textarea v-model="contactMessage" rows="6" required></textarea>
+          </label>
+          <div class="contact-actions">
+            <button type="submit">Enviar</button>
+          </div>
+        </form>
+        <div class="contact-info">
+          <h4>Síguenos</h4>
+          <p
+            ><a
+              href="https://www.instagram.com/gastro.garatxe/"
+              target="_blank"
+              rel="noopener"
+              >@gastrogaratxe</a
+            ></p
+          >
+        </div>
       </div>
     </section>
   </div>
@@ -545,6 +651,93 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
 
   .make-reservation {
     background-color: black;
+  }
+
+  .contact-section {
+    background: #0f0f0f;
+    color: white;
+    padding-top: 7vh;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    box-sizing: border-box;
+    height: 100dvh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+    justify-content: flex-start;
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3vw;
+      align-items: start;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      label {
+        display: flex;
+        flex-direction: column;
+        font-family: "Orbitron", sans-serif;
+        color: #fff;
+
+        input,
+        textarea {
+          margin-top: 0.5rem;
+          padding: 0.8rem;
+          border-radius: 6px;
+          border: none;
+          background: #222;
+          color: #fff;
+        }
+      }
+
+      .contact-actions {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        button {
+          background: transparent;
+          border: 2px solid #fff;
+          color: #fff;
+          padding: 0.6rem 1rem;
+          cursor: pointer;
+          font-family: "Orbitron", sans-serif;
+        }
+
+        .phone-link,
+        .insta-link {
+          color: #fff;
+          text-decoration: none;
+          border-left: 1px solid #fff;
+          padding-left: 1rem;
+        }
+      }
+    }
+
+    .contact-info {
+      font-family: "Orbitron", sans-serif;
+      h4 {
+        margin: 0.4rem 0;
+        font-size: 1.2rem;
+      }
+      p {
+        margin: 0.2rem 0 1rem 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   }
 }
 .iframe-wrapper {
