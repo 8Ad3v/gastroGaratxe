@@ -309,6 +309,13 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
           Bodega<span><img :src="openEXT" /></span>
         </button>
         <button
+          @click="scrollToContact"
+          class="contact-button"
+          id="contact-button-home"
+        >
+          CONTACTO
+        </button>
+        <button
           @click="scrollToReservation"
           class="reserve-button"
           id="reserve-button-home"
@@ -498,6 +505,13 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
           filter: invert(1);
         }
       }
+      .contact-button {
+        grid-column: span 2;
+        background-color: transparent;
+        color: white;
+        font-family: "Orbitron", sans-serif;
+        font-size: 5vw;
+      }
       .reserve-button {
         grid-column: span 2;
         display: flex;
@@ -598,46 +612,56 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       justify-content: center;
       width: 100%;
       gap: 2vw;
-      /* padding: 4vh 4vw; */
       padding-bottom: 4vh;
       padding-top: 4vh;
       border-radius: 0.5vw;
       position: relative;
 
+      /* Allow columns to shrink and content to wrap instead of overflowing */
       .menu-column {
-        flex: 1;
+        flex: 1 1 0;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
-        padding: 1vh 2vw;
+        justify-content: flex-start;
+        gap: 0.6rem;
+
+        /* Make all text wrap and break long words if needed */
+        h3,
+        .menu-price,
+        .menu-steps,
+        .menu-note {
+          white-space: normal;
+          overflow: visible;
+          word-break: break-word;
+          hyphens: auto;
+          margin: 0;
+        }
 
         h3 {
           font-family: "Orbitron", sans-serif;
-          font-size: 6vw;
-          margin: 0 0 1vh 0;
+          /* responsive size, will shrink on short screens */
+          font-size: clamp(1.4rem, 5.5vw, 3.8rem);
+          text-align: center;
           color: #fff;
         }
 
         .menu-price {
           font-family: "Orbitron", sans-serif;
-          font-size: 5vw;
+          font-size: clamp(1.6rem, 5vw, 3.2rem);
           font-weight: 700;
-          margin: 1vh 0;
         }
 
         .menu-steps {
           font-family: "Orbitron", sans-serif;
-          font-size: 5vw;
-          margin: 1vh 0;
+          font-size: clamp(1.4rem, 4.5vw, 2.8rem);
         }
 
         .menu-note {
           font-family: "Orbitron", sans-serif;
-          font-size: 4vw;
+          font-size: clamp(1rem, 3.5vw, 1.6rem);
           text-align: center;
           opacity: 0.95;
-          margin-top: 1vh;
         }
       }
 
@@ -645,6 +669,43 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
         width: 2px;
         background: #fff;
         margin: 0 1vw;
+        align-self: stretch;
+      }
+
+      /* If viewport height is low, reduce spacing and font sizes further */
+      @media (max-height: 700px) {
+        padding-top: 2vh;
+        padding-bottom: 2vh;
+        gap: 1vw;
+        .menu-column {
+          padding: 0.5vh 1vw;
+          h3 {
+            font-size: clamp(1.2rem, 4.2vw, 3rem);
+          }
+          .menu-price {
+            font-size: clamp(1.2rem, 3.8vw, 2.6rem);
+          }
+          .menu-steps {
+            font-size: clamp(1rem, 3.5vw, 2.2rem);
+          }
+          .menu-note {
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+          }
+        }
+        .menu-divider {
+          margin: 0 0.6vw;
+        }
+      }
+
+      @media (max-height: 600px) {
+        flex-direction: column;
+        align-items: center;
+        .menu-divider {
+          display: none;
+        }
+        .menu-column {
+          width: 100%;
+        }
       }
     }
   }
