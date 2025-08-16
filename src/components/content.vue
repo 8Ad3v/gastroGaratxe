@@ -273,34 +273,35 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       style="background-color: black"
       ref="foodMenuRef"
     >
-      <div style="display: flex; justify-content: space-between">
-        <p class="title-test" ref="titleMenuRef">Menú</p>
-        <button class="wine-btn" @click="openWineList()">
-          Carta de vinos<span><img :src="openEXT" /></span>
+      <!-- top narrow title band that matches header spacing -->
+      <div class="menu-title-band">
+        <p class="menu-big-title">Menú</p>
+        <button @click="openWineList()">
+          Bodega<span><img :src="openEXT" /></span>
         </button>
       </div>
-      <div class="menu-images">
+
+      <!-- large image / carousel beneath the title -->
+      <div class="menu-hero">
         <carou :slides="slides" :interval="4000"></carou>
       </div>
 
-      <div class="food-menu-info fade-in">
-        <div class="food-menu-info-steps">
-          <p ref="number1">{{ animatedNumber1 }}</p>
-          <p>pasos</p>
+      <!-- bottom panel with two equal columns and central divider -->
+      <div class="menu-panel">
+        <div class="menu-column">
+          <h3>Menú degustación</h3>
+          <div class="menu-price">75€</div>
+          <div class="menu-steps">11 pasos</div>
+          <div class="menu-note">martes-sabado<br />noche</div>
         </div>
-        <hr
-          style="
-            width: 20%;
-            margin: 0 auto;
-            height: 0.3vh;
-            color: white;
-            background-color: white;
-          "
-        />
 
-        <div class="food-menu-info-steps price">
-          <p>75€</p>
-          <p>(IVA incluido)</p>
+        <div class="menu-divider" aria-hidden="true"></div>
+
+        <div class="menu-column">
+          <h3>Menú mediodía</h3>
+          <div class="menu-price">40€</div>
+          <div class="menu-steps">7 pasos</div>
+          <div class="menu-note">martes-sabado<br />mediodía</div>
         </div>
       </div>
     </section>
@@ -405,70 +406,139 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       }
     }
   }
-
+  /* MENU SECTION - designed to match the provided mockup */
   .food-menu {
-    .menu-images {
-      width: 100%;
-      height: 60%;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      overflow: hidden;
-      position: absolute;
-      left: 0;
+    padding-top: 7vh; /* same as other sections */
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    .menu-title-band {
+      height: 8vh;
       display: flex;
-      justify-content: center;
-      margin-top: 20%;
-    }
-    .wine-btn {
-      font-family: "Orbitron", sans-serif;
-      color: white;
-      text-decoration: none;
-      cursor: pointer;
-      background-color: transparent;
-      display: flex;
-      flex-direction: row;
       align-items: center;
-      span {
-        width: 1em;
-        height: 1em;
-        filter: invert(1);
-      }
-    }
-
-    &-info {
-      width: 100%;
-      height: fit-content;
-      display: flex;
-      flex-direction: column;
       justify-content: space-between;
+      border-top-left-radius: 0.5vw;
+      border-top-right-radius: 0.5vw;
+      margin-bottom: 1vh;
 
-      p {
-        color: white;
+      button {
         font-family: "Orbitron", sans-serif;
-      }
-      &-steps {
+        color: white;
+        font-size: 5vw;
+        text-decoration: none;
+        background-color: transparent;
         display: flex;
-        flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 5%;
-        p:nth-of-type(1) {
-          font-size: 10vw;
-        }
-
-        p:nth-of-type(2) {
-          font-size: 8vw;
+        cursor: pointer;
+        span {
+          width: 1em;
+          height: 1em;
+          filter: invert(1);
+          margin-left: 0.5em; /* Espacio entre el texto y el icono */
         }
       }
-      .price {
-        p:nth-of-type(1) {
-          font-size: 5vw;
+    }
+    .menu-big-title {
+      font-family: "Orbitron", sans-serif;
+      color: white;
+      font-size: 6vw;
+      letter-spacing: 0.06em;
+      margin: 0;
+    }
+
+    .menu-hero {
+      /* expand horizontally to 120% and keep it centered using negative margin */
+      width: 120%;
+      margin-left: -10%;
+      /* keep aspect ratio so height adjusts automatically without distortion */
+      aspect-ratio: 16/9;
+      height: auto;
+      min-height: 36vh; /* ensure it takes more vertical space */
+      overflow: hidden;
+      background: #e9e9e9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2vh;
+
+      /* make the carousel fill the hero container */
+      & > * {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    /* responsive: on small screens don't overflow horizontally */
+    @media (max-width: 768px) {
+      .menu-hero {
+        width: 100%;
+        margin-left: 0;
+        aspect-ratio: auto;
+        min-height: 40vh;
+      }
+    }
+
+    .menu-panel {
+      color: white;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+      gap: 2vw;
+      /* padding: 4vh 4vw; */
+      padding-bottom: 4vh;
+      padding-top: 4vh;
+      border-radius: 0.5vw;
+      position: relative;
+
+      .menu-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1vh 2vw;
+
+        h3 {
+          font-family: "Orbitron", sans-serif;
+          font-size: 6vw;
+          margin: 0 0 1vh 0;
+          color: #fff;
         }
 
-        p:nth-of-type(2) {
-          font-size: 4vw;
+        .menu-price {
+          font-family: "Orbitron", sans-serif;
+          font-size: 5vw;
+          font-weight: 700;
+          margin: 1vh 0;
         }
+
+        .menu-steps {
+          font-family: "Orbitron", sans-serif;
+          font-size: 5vw;
+          margin: 1vh 0;
+        }
+
+        .menu-note {
+          font-family: "Orbitron", sans-serif;
+          font-size: 4vw;
+          text-align: center;
+          opacity: 0.95;
+          margin-top: 1vh;
+        }
+      }
+
+      .menu-divider {
+        width: 2px;
+        background: #fff;
+        margin: 0 1vw;
       }
     }
   }
