@@ -141,15 +141,27 @@ onUnmounted(() => {
           nuestro concepto y esencia original.
         </p>
       </div>
-      <div id="menuSection" class="section">
-        <h2 :style="{ color: textColor }">Menú</h2>
-        <p :style="{ color: textColor }">
-          - 11 pasos de cocina de autor<br />
-          - 2 chefs<br />
-          - cocina vista<br />
-          - 75€ <span style="font-size: 0.5em">(IVA incluido)</span><br />
-        </p>
+      <div id="menuSection" class="section menu-section">
+        <div class="hmenu-column">
+          <h2 :style="{ color: textColor }">Menú degustación</h2>
+          <p :style="{ color: textColor }">
+            - 11 pasos de cocina de autor<br />
+            - 2 chefs<br />
+            - miercoles - sabado | <strong>noches</strong><br />
+            - 75€ <span style="font-size: 0.5em">(IVA incluido)</span><br /> </p
+        ></div>
+        <div class="menu-divider" aria-hidden="true"></div>
+
+        <div class="hmenu-column">
+          <h2 :style="{ color: textColor }">Menú mediodía</h2>
+          <p :style="{ color: textColor }">
+            - 7 pasos de cocina de autor<br />
+            - 2 chefs<br />
+            - miercoles - sabado | <strong>mediodía</strong><br />
+            - 35€ <span style="font-size: 0.5em">(IVA incluido)</span><br /> </p
+        ></div>
       </div>
+
       <div id="bookSection" ref="reservationRefh" class="section">
         <h2 :style="{ color: textColor }">Reservar</h2>
         <div style="width: 100%; height: 80%">
@@ -261,6 +273,7 @@ onUnmounted(() => {
       z-index: 100;
       background-color: #00000087 !important;
     }
+
     .section {
       min-height: 100vh;
       scroll-snap-align: start;
@@ -308,6 +321,13 @@ onUnmounted(() => {
         color: #213547;
       }
     }
+  }
+  .menu-section {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    flex-wrap: wrap;
   }
 }
 </style>

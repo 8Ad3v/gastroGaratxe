@@ -13,11 +13,20 @@ const emitReservation = () => {
   const event = new CustomEvent("headerreservation");
   window.dispatchEvent(event);
 };
+
+const emitContact = () => {
+  // Emitimos el evento de contacto
+  const event = new CustomEvent("headercontact");
+  window.dispatchEvent(event);
+};
 </script>
 
 <template>
   <div v-if="!isInHomePage" class="headerOptionsContainer">
-    <div @click.stop="emitReservation"><button>RESERVA</button></div>
+    <div>
+      <button @click.stop="emitReservation">RESERVA</button>
+      <button @click.stop="emitContact">CONTACTO</button>
+    </div>
     <div><img src="/src/assets/logo.png" /></div>
   </div>
 </template>
@@ -30,21 +39,29 @@ const emitReservation = () => {
   width: 100%;
   color: white;
   z-index: 200;
-  margin-top: 1.2vh;
+  padding-top: 1.2vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
   mix-blend-mode: difference;
-  overflow-y: hidden;
+  overflow: visible;
 
   div {
-    width: 33%;
+    width: auto;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0 0.6rem;
 
     button {
       background-color: transparent;
+      color: inherit;
+      border: 1px solid transparent; /* keep visually minimal by default */
+      padding: 0.6rem 1rem;
+      line-height: 1;
+      font-family: "Orbitron", sans-serif;
+      cursor: pointer;
     }
     img {
       width: 50%;
