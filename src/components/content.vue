@@ -368,19 +368,18 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       <!-- bottom panel with two equal columns and central divider -->
       <div class="menu-panel">
         <div class="menu-column">
-          <h3>Menú degustación</h3>
-          <div class="menu-price">75€</div>
-          <div class="menu-steps">11 pasos</div>
-          <div class="menu-note">martes-sabado<br />noche</div>
+          <h3>Menú degustación gastro</h3>
+          <div class="menu-price">75€ <span>11 pasos</span></div>
+          <div class="menu-note">miércoles-viernes<br />21:00</div>
+          <div class="menu-note">sábado<br />13:30 - 21:00</div>
         </div>
 
         <div class="menu-divider" aria-hidden="true"></div>
 
         <div class="menu-column">
-          <h3>Menú mediodía</h3>
-          <div class="menu-price">40€</div>
-          <div class="menu-steps">7 pasos</div>
-          <div class="menu-note">martes-sabado<br />mediodía</div>
+          <h3>Menú degustación corto</h3>
+          <div class="menu-price">40€ <span>6 pasos</span></div>
+          <div class="menu-note">miércoles-viernes<br />13:30 - 21:00</div>
         </div>
       </div>
     </section>
@@ -397,34 +396,17 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
 
     <section class="contact-section" ref="contactRef">
       <p class="title-test">Contacto</p>
-      <div class="contact-grid">
-        <form class="contact-form" @submit.prevent="sendContact">
-          <label>
-            Nombre
-            <input type="text" v-model="contactName" required />
-          </label>
-          <label>
-            Email
-            <input type="email" v-model="contactEmail" required />
-          </label>
-          <label>
-            Mensaje
-            <textarea v-model="contactMessage" rows="6" required></textarea>
-          </label>
-          <div class="contact-actions">
-            <button type="submit">Enviar</button>
-          </div>
-        </form>
-        <div class="contact-info">
-          <h4>Síguenos</h4>
-          <p
-            ><a
-              href="https://www.instagram.com/gastro.garatxe/"
-              target="_blank"
-              rel="noopener"
-              >@gastrogaratxe</a
-            ></p
-          >
+      <div class="contact-content">
+        <p class="contact-text">
+          Para más información no dudes en ponerte en contacto a través de nuestro WhatsApp o envíanos un mail
+        </p>
+        <div class="contact-links">
+          <a href="mailto:info@gastrogaratxe.com" class="contact-link email-link">
+            info@gastrogaratxe.com
+          </a>
+          <a href="https://wa.me/34622368262" target="_blank" rel="noopener" class="contact-link whatsapp-link">
+            WhatsApp
+          </a>
         </div>
       </div>
     </section>
@@ -650,6 +632,12 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
           font-family: "Orbitron", sans-serif;
           font-size: clamp(1.6rem, 5vw, 3.2rem);
           font-weight: 700;
+
+          span {
+            font-size: 0.8em;
+            font-weight: 400;
+            font-style: italic;
+          }
         }
 
         .menu-steps {
@@ -730,73 +718,73 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
     scroll-snap-align: start;
     justify-content: flex-start;
 
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3vw;
-      align-items: start;
-    }
-
-    .contact-form {
+    .contact-content {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      gap: 3rem;
+      text-align: center;
+      padding: 2rem;
+    }
 
-      label {
-        display: flex;
-        flex-direction: column;
-        font-family: "Orbitron", sans-serif;
-        color: #fff;
+    .contact-text {
+      font-family: "Orbitron", sans-serif;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      color: #fff;
+      max-width: 800px;
+      line-height: 1.6;
+      margin: 0;
+    }
 
-        input,
-        textarea {
-          margin-top: 0.5rem;
-          padding: 0.8rem;
-          border-radius: 6px;
-          border: none;
-          background: #222;
-          color: #fff;
-        }
-      }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+    }
 
-      .contact-actions {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
+    .contact-link {
+      font-family: "Orbitron", sans-serif;
+      color: #fff;
+      text-decoration: none;
+      font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+      padding: 1rem 2rem;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      min-width: 280px;
+      text-align: center;
 
-        button {
-          background: transparent;
-          border: 2px solid #fff;
-          color: #fff;
-          padding: 0.6rem 1rem;
-          cursor: pointer;
-          font-family: "Orbitron", sans-serif;
-        }
-
-        .phone-link,
-        .insta-link {
-          color: #fff;
-          text-decoration: none;
-          border-left: 1px solid #fff;
-          padding-left: 1rem;
-        }
+      &:hover {
+        background-color: #fff;
+        color: #0f0f0f;
       }
     }
 
-    .contact-info {
-      font-family: "Orbitron", sans-serif;
-      h4 {
-        margin: 0.4rem 0;
-        font-size: 1.2rem;
-      }
-      p {
-        margin: 0.2rem 0 1rem 0;
-      }
+    .email-link {
+      background-color: transparent;
+    }
+
+    .whatsapp-link {
+      background-color: transparent;
     }
 
     @media (max-width: 768px) {
-      .contact-grid {
-        grid-template-columns: 1fr;
+      .contact-content {
+        gap: 2rem;
+        padding: 1rem;
+      }
+
+      .contact-text {
+        font-size: clamp(1rem, 5vw, 1.6rem);
+      }
+
+      .contact-link {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+        min-width: 240px;
+        padding: 0.8rem 1.5rem;
       }
     }
   }

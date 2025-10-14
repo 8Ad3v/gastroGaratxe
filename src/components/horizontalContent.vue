@@ -143,22 +143,21 @@ onUnmounted(() => {
       </div>
       <div id="menuSection" class="section menu-section">
         <div class="hmenu-column">
-          <h2 :style="{ color: textColor }">Menú degustación</h2>
+          <h2 :style="{ color: textColor }">Menú degustación gastro</h2>
           <p :style="{ color: textColor }">
             - 11 pasos de cocina de autor<br />
-            - 2 chefs<br />
-            - miercoles - sabado | <strong>noches</strong><br />
+            - miércoles - viernes | <strong>21:00</strong><br />
+            - sábado | <strong>13:30 - 21:00</strong><br />
             - 75€ <span style="font-size: 0.5em">(IVA incluido)</span><br /> </p
         ></div>
         <div class="menu-divider" aria-hidden="true"></div>
 
         <div class="hmenu-column">
-          <h2 :style="{ color: textColor }">Menú mediodía</h2>
+          <h2 :style="{ color: textColor }">Menú degustación corto</h2>
           <p :style="{ color: textColor }">
-            - 7 pasos de cocina de autor<br />
-            - 2 chefs<br />
-            - miercoles - sabado | <strong>mediodía</strong><br />
-            - 35€ <span style="font-size: 0.5em">(IVA incluido)</span><br /> </p
+            - 6 pasos de cocina de autor<br />
+            - miércoles - viernes | <strong>13:30 - 15:15</strong><br />
+            - 40€ <span style="font-size: 0.5em">(IVA incluido)</span><br /> </p
         ></div>
       </div>
 
@@ -285,6 +284,7 @@ onUnmounted(() => {
       align-items: flex-start;
       opacity: 0;
       transition: opacity 0.5s ease-in-out;
+      flex-wrap: nowrap;
 
       h2 {
         font-family: "Orbitron", sans-serif;
