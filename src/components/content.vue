@@ -398,13 +398,22 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       <p class="title-test">Contacto</p>
       <div class="contact-content">
         <p class="contact-text">
-          Para más información no dudes en ponerte en contacto a través de nuestro WhatsApp o envíanos un mail
+          Para más información no dudes en ponerte en contacto a través de
+          nuestro WhatsApp o envíanos un mail
         </p>
         <div class="contact-links">
-          <a href="mailto:info@gastrogaratxe.com" class="contact-link email-link">
+          <a
+            href="mailto:info@gastrogaratxe.com"
+            class="contact-link email-link"
+          >
             info@gastrogaratxe.com
           </a>
-          <a href="https://wa.me/34622368262" target="_blank" rel="noopener" class="contact-link whatsapp-link">
+          <a
+            href="https://wa.me/34622368262"
+            target="_blank"
+            rel="noopener"
+            class="contact-link whatsapp-link"
+          >
             WhatsApp
           </a>
         </div>
