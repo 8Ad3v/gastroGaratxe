@@ -110,7 +110,7 @@ onUnmounted(() => {
         <h1>GastroGaratxe</h1>
         <div><a href="#meetUsSection">Conócenos</a></div>
         <div><a href="#originsSection">Orígenes</a></div>
-        <div><a href="#menuSection">Menú</a></div>
+        <div><a href="#menuSection">Menús</a></div>
         <div
           @click="openWineList()"
           class="home-menu-container-lightButton"

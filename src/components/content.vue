@@ -303,7 +303,7 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
           Orígenes
         </button>
         <button @click="scrollToMenu" class="home-menu-container-lightButton">
-          Menú
+          Menús
         </button>
         <button @click="openWineList()" class="home-menu-container-lightButton">
           Bodega<span><img :src="openEXT" /></span>
@@ -354,7 +354,7 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
     >
       <!-- top narrow title band that matches header spacing -->
       <div class="menu-title-band">
-        <p class="menu-big-title">Menú</p>
+        <p class="menu-big-title">Menús</p>
         <button @click="openWineList()">
           Bodega<span><img :src="openEXT" /></span>
         </button>
@@ -535,7 +535,6 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       justify-content: space-between;
       border-top-left-radius: 0.5vw;
       border-top-right-radius: 0.5vw;
-      margin-bottom: 1vh;
 
       button {
         font-family: "Orbitron", sans-serif;
@@ -576,7 +575,6 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 2vh;
 
       /* make the carousel fill the hero container */
       & > * {
@@ -603,8 +601,7 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       justify-content: center;
       width: 100%;
       gap: 2vw;
-      padding-bottom: 4vh;
-      padding-top: 4vh;
+      padding-top: 1vh;
       border-radius: 0.5vw;
       position: relative;
 
@@ -671,8 +668,6 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
 
       /* If viewport height is low, reduce spacing and font sizes further */
       @media (max-height: 700px) {
-        padding-top: 2vh;
-        padding-bottom: 2vh;
         gap: 1vw;
         .menu-column {
           padding: 0.5vh 1vw;
