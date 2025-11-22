@@ -10,6 +10,7 @@ const homeRef = ref(null);
 const aboutUsRef = ref(null);
 const historyRef = ref(null);
 const foodMenuRef = ref(null);
+const giftRef = ref(null);
 const reservationRef = ref(null);
 const contactRef = ref(null);
 
@@ -39,6 +40,12 @@ const scrollToHistory = () => {
 const scrollToMenu = () => {
   if (foodMenuRef.value) {
     foodMenuRef.value.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
+const scrollToGift = () => {
+  if (giftRef.value) {
+    giftRef.value.scrollIntoView({ behavior: "smooth" });
   }
 };
 
@@ -288,7 +295,13 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
 <template>
   <div class="content">
     <section class="home" ref="homeRef">
-      <p class="title-test" ref="titleGastroRef">GastroGaratxe</p>
+      <div class="title-and-logos">
+        <p class="title-test" ref="titleGastroRef">GastroGaratxe</p>
+        <div class="logos">
+          <img src="/macarfilogo.png" alt="Macarfi Logo" />
+          <img src="/slowfoodlogo.png" alt="Slow Food Logo" class="slowfood" />
+        </div>
+      </div>
       <section class="home-menu-container">
         <button
           @click="scrollToAboutUs"
@@ -302,8 +315,17 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
         >
           Orígenes
         </button>
-        <button @click="scrollToMenu" class="home-menu-container-lightButton">
+        <button
+          @click="scrollToMenu"
+          class="home-menu-container-lightButton half"
+        >
           Menús
+        </button>
+        <button
+          @click="scrollToGift"
+          class="home-menu-container-lightButton half"
+        >
+          Regala gastrogaratxe
         </button>
         <button @click="openWineList()" class="home-menu-container-lightButton">
           Bodega<span><img :src="openEXT" /></span>
@@ -381,6 +403,48 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
           <div class="menu-price">40€ <span>6 pasos</span></div>
           <div class="menu-note">miércoles-viernes<br />13:30 - 21:00</div>
         </div>
+      </div>
+    </section>
+
+    <section class="gift-section full-page" ref="giftRef">
+      <p class="title-test">Regala Gastrogaratxe</p>
+      <div class="gift-grid">
+        <div class="gift-card">
+          <h3>Menú Corto</h3>
+          <p class="gift-schedule">Miércoles a Viernes (13:30 - 15:15)</p>
+          <div class="gift-item">
+            <span>Solo Menú</span>
+            <span class="price">40€</span>
+          </div>
+          <div class="gift-item">
+            <span>Menú + Bodega*</span>
+            <span class="price">60€/pers</span>
+          </div>
+        </div>
+
+        <div class="gift-card">
+          <h3>Menú Gastro</h3>
+          <p class="gift-schedule">Noches + Sábados (13:30 y 21:00)</p>
+          <div class="gift-item">
+            <span>Solo Menú</span>
+            <span class="price">75€</span>
+          </div>
+          <div class="gift-item">
+            <span>Menú + Bodega*</span>
+            <span class="price">95€/pers</span>
+          </div>
+          <div class="gift-item">
+            <span>Menú + Maridaje</span>
+            <span class="price">120€</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="gift-footer">
+        <p class="small">
+          *Bodega (min 2 pers): Botella vino/espumoso + agua + cafés
+        </p>
+        <p class="highlight">Validez 6 meses. Reserva vía web.</p>
       </div>
     </section>
 
@@ -472,6 +536,20 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
     padding: 20px;
     scroll-snap-align: start;
 
+    .logos {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 0;
+      img {
+        height: 8.5vw;
+        width: auto;
+      }
+      .slowfood {
+        height: 12.75vw;
+      }
+    }
+
     .home-menu-container {
       display: grid;
       width: 100%;
@@ -495,6 +573,9 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
           height: 1em;
           filter: invert(1);
         }
+      }
+      .half {
+        grid-column: span 1;
       }
       .contact-button {
         grid-column: span 2;
@@ -698,6 +779,96 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
         .menu-column {
           width: 100%;
         }
+      }
+    }
+  }
+
+  .gift-section {
+    background: #0b0b0b;
+    color: white;
+    padding-top: 7vh;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+
+    .title-test {
+      font-size: 7vw;
+      margin-bottom: 1rem;
+    }
+
+    .gift-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      width: 100%;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .gift-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1.5rem;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      h3 {
+        font-family: "Orbitron", sans-serif;
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+        color: #fff;
+        margin: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .gift-schedule {
+        font-family: "Orbitron", sans-serif;
+        font-size: clamp(0.8rem, 1.5vw, 1rem);
+        color: #aaa;
+        margin: 0;
+        margin-bottom: 1rem;
+      }
+
+      .gift-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "Orbitron", sans-serif;
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
+        margin-bottom: 0.5rem;
+
+        .price {
+          font-weight: bold;
+          color: #ddd;
+          margin-left: 1rem;
+        }
+      }
+    }
+
+    .gift-footer {
+      margin-top: 1rem;
+      text-align: center;
+      font-family: "Orbitron", sans-serif;
+
+      p {
+        margin: 0.3rem 0;
+        font-size: clamp(0.8rem, 1.5vw, 1rem);
+        color: #ccc;
+      }
+      .highlight {
+        color: #fff;
+        font-weight: bold;
+        margin-top: 0.5rem;
       }
     }
   }

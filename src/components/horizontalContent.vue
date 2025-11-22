@@ -26,6 +26,7 @@ const openWineList = () => {
 };
 
 const reservationRefh = ref(null);
+const giftRef = ref(null);
 
 const contentRef = ref(null);
 const hheaderRef = ref(null);
@@ -49,7 +50,11 @@ onMounted(() => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             section.classList.add("visible");
-            if (section.id === "menuSection" || section.id === "bookSection") {
+            if (
+              section.id === "menuSection" ||
+              section.id === "bookSection" ||
+              section.id === "giftSection"
+            ) {
               contentBackgroundColor.value = "black";
               textColor.value = "white";
               showCarou.value = true;
@@ -85,6 +90,10 @@ onUnmounted(() => {
   <div class="horizontalContainer">
     <div v-if="!showCarou" class="video-container">
       <video class="video" :src="videoSourceNEW" autoplay muted loop></video>
+      <div class="video-logos">
+        <img src="/macarfilogo.png" alt="Macarfi Logo" />
+        <img src="/slowfoodlogo.png" alt="Slow Food Logo" class="slowfood" />
+      </div>
     </div>
     <div
       v-if="showCarou"
@@ -111,6 +120,7 @@ onUnmounted(() => {
         <div><a href="#meetUsSection">Conócenos</a></div>
         <div><a href="#originsSection">Orígenes</a></div>
         <div><a href="#menuSection">Menús</a></div>
+        <div><a href="#giftSection">Regala Gastrogaratxe</a></div>
         <div
           @click="openWineList()"
           class="home-menu-container-lightButton"
@@ -141,6 +151,51 @@ onUnmounted(() => {
           nuestro concepto y esencia original.
         </p>
       </div>
+      <section
+        id="giftSection"
+        ref="giftRef"
+        class="section gift-section full-page"
+      >
+        <p class="title-test">Regala Gastrogaratxe</p>
+        <div class="gift-grid">
+          <div class="gift-card">
+            <h3>Menú Corto</h3>
+            <p class="gift-schedule">Miércoles a Viernes (13:30 - 15:15)</p>
+            <div class="gift-item">
+              <span>Solo Menú</span>
+              <span class="price">40€</span>
+            </div>
+            <div class="gift-item">
+              <span>Menú + Bodega*</span>
+              <span class="price">60€/pers</span>
+            </div>
+          </div>
+
+          <div class="gift-card">
+            <h3>Menú Gastro</h3>
+            <p class="gift-schedule">Noches + Sábados (13:30 y 21:00)</p>
+            <div class="gift-item">
+              <span>Solo Menú</span>
+              <span class="price">75€</span>
+            </div>
+            <div class="gift-item">
+              <span>Menú + Bodega*</span>
+              <span class="price">95€/pers</span>
+            </div>
+            <div class="gift-item">
+              <span>Menú + Maridaje</span>
+              <span class="price">120€</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gift-footer">
+          <p class="small">
+            *Bodega (min 2 pers): Botella vino/espumoso + agua + cafés
+          </p>
+          <p class="highlight">Validez 6 meses. Reserva vía web.</p>
+        </div>
+      </section>
       <div id="menuSection" class="section menu-section">
         <div class="hmenu-column">
           <h2 :style="{ color: textColor }">Menú degustación gastro</h2>
@@ -195,6 +250,27 @@ onUnmounted(() => {
       height: 100%;
       width: auto;
       object-fit: cover;
+    }
+    .video-logos {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+      img {
+        max-height: 40px;
+        width: auto;
+      }
+      .slowfood {
+        max-height: 64px;
+      }
     }
   }
   .carou-container {
@@ -295,7 +371,7 @@ onUnmounted(() => {
       p {
         font-family: "Orbitron", sans-serif;
         font-size: 2vw;
-        color: #213547;
+        color: #ffffff;
         margin-top: 10px; /* Espacio entre el título y el párrafo */
         text-align: left;
       }
@@ -317,8 +393,125 @@ onUnmounted(() => {
       }
       a {
         font-weight: 100;
-        font-size: 4.5vw;
+        font-size: 3.5vw;
         color: #213547;
+      }
+    }
+
+    .gift-section {
+      width: 100%;
+      min-height: 100vh;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      background: transparent;
+      color: #ffffff;
+
+      .title-test {
+        font-family: "Orbitron", sans-serif;
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        text-align: center;
+        margin: 0 0 1rem 0;
+        color: #ffffff;
+      }
+    }
+
+    .gift-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .gift-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 2rem 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-4px);
+      }
+
+      h3 {
+        font-family: "Orbitron", sans-serif;
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+        color: #ffffff;
+        letter-spacing: 0.05em;
+      }
+    }
+
+    .gift-schedule {
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0 0 0.5rem 0;
+      font-weight: 300;
+    }
+
+    .gift-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 1.05rem;
+      color: #ffffff;
+
+      &:first-of-type {
+        border-top: none;
+        padding-top: 0.5rem;
+      }
+
+      span:first-child {
+        font-weight: 300;
+      }
+
+      .price {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #ffffff;
+      }
+    }
+
+    .gift-footer {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1rem;
+
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.75);
+        font-weight: 300;
+      }
+
+      .highlight {
+        font-weight: 700;
+        font-size: 1.05rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #ffffff;
       }
     }
   }
