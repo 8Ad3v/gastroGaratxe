@@ -67,7 +67,7 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.5 } // El porcentaje de visibilidad necesario para que se dispare el callback
+  { threshold: 0.5 }, // El porcentaje de visibilidad necesario para que se dispare el callback
 );
 const observeElements = () => {
   const elements = document.querySelectorAll(".fade-in");
@@ -198,14 +198,14 @@ const sendContact = async (e) => {
         const text = await res.text();
         console.error("Error enviando formulario:", res.status, text);
         alert(
-          "No se pudo enviar el formulario automáticamente. Se abrirá tu cliente de correo como alternativa."
+          "No se pudo enviar el formulario automáticamente. Se abrirá tu cliente de correo como alternativa.",
         );
         // proceed to fallback mailto below
       }
     } catch (err) {
       console.error("Error en fetch:", err);
       alert(
-        "Error al enviar el formulario. Se abrirá tu cliente de correo como alternativa."
+        "Error al enviar el formulario. Se abrirá tu cliente de correo como alternativa.",
       );
       // fallback to mailto
     }
@@ -240,7 +240,7 @@ onMounted(() => {
           }
         });
       },
-      { threshold: 0.5 } // Se activa cuando el 50% del elemento es visible
+      { threshold: 0.5 }, // Se activa cuando el 50% del elemento es visible
     );
     if (number1.value) observer2.observe(number1.value);
     if (number2.value) observer2.observe(number2.value);
@@ -257,7 +257,7 @@ onMounted(() => {
           }
         });
       },
-      { threshold: 0.1 } // Ajusta el umbral según necesites
+      { threshold: 0.1 }, // Ajusta el umbral según necesites
     );
 
     if (aboutUsRef.value) observer3.observe(aboutUsRef.value);
@@ -390,18 +390,19 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       <!-- bottom panel with two equal columns and central divider -->
       <div class="menu-panel">
         <div class="menu-column">
-          <h3>Menú degustación gastro</h3>
+          <h3>Gran menú Gastrogaratxe</h3>
           <div class="menu-price">75€ <span>11 pasos</span></div>
-          <div class="menu-note">miércoles-viernes<br />21:00</div>
-          <div class="menu-note">sábado<br />13:30 - 21:00</div>
+          <div class="menu-note">Mié-Sáb · mediodía y noche</div>
         </div>
 
         <div class="menu-divider" aria-hidden="true"></div>
 
         <div class="menu-column">
-          <h3>Menú degustación corto</h3>
+          <h3>Petit menú Gastrogaratxe</h3>
           <div class="menu-price">40€ <span>6 pasos</span></div>
-          <div class="menu-note">miércoles-viernes<br />13:30 - 21:00</div>
+          <div class="menu-note">
+            Mié-Jue · mediodía y noche · Vie mediodía (13:30-15:15)
+          </div>
         </div>
       </div>
     </section>
@@ -410,8 +411,10 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
       <p class="title-test">Regala Gastrogaratxe</p>
       <div class="gift-grid">
         <div class="gift-card">
-          <h3>Menú Corto</h3>
-          <p class="gift-schedule">Miércoles a Viernes (13:30 - 15:15)</p>
+          <h3>Petit menú Gastrogaratxe</h3>
+          <p class="gift-schedule">
+            Mié-Jue · mediodía y noche · Vie mediodía (13:30-15:15)
+          </p>
           <div class="gift-item">
             <span>Solo Menú</span>
             <span class="price">40€</span>
@@ -423,8 +426,8 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
         </div>
 
         <div class="gift-card">
-          <h3>Menú Gastro</h3>
-          <p class="gift-schedule">Noches + Sábados (13:30 y 21:00)</p>
+          <h3>Gran menú Gastrogaratxe</h3>
+          <p class="gift-schedule">Mié-Sáb · mediodía y noche</p>
           <div class="gift-item">
             <span>Solo Menú</span>
             <span class="price">75€</span>
@@ -846,7 +849,7 @@ const slides = ref([image1, image2, image3, image4, image5, image6]);
         font-family: "Orbitron", sans-serif;
         font-size: clamp(0.9rem, 2vw, 1.2rem);
         margin-bottom: 0.5rem;
-
+        overflow: hidden;
         .price {
           font-weight: bold;
           color: #ddd;

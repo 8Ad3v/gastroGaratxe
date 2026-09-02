@@ -20,6 +20,12 @@
 
   overflow-x: hidden;
 }
+p{
+  overflow: hidden;
+}
+h3{
+  overflow: hidden;
+}
 html {
   scroll-behavior: smooth;
   overscroll-behavior: contain; /* Contiene el scroll para evitar saltos bruscos */

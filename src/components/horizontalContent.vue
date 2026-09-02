@@ -6,7 +6,7 @@ import gglogo from "/src/assets/logo.png";
 import openEXT from "/src/assets/icons/openEXT.svg";
 
 const videoSourceNEW = ref(
-  new URL("@/assets/vid/vidbg.mp4", import.meta.url).href
+  new URL("@/assets/vid/vidbg.mp4", import.meta.url).href,
 );
 
 const contentBackgroundColor = ref("var(--background-color)");
@@ -70,7 +70,7 @@ onMounted(() => {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
     observer.observe(section);
   });
@@ -159,8 +159,10 @@ onUnmounted(() => {
         <p class="title-test">Regala Gastrogaratxe</p>
         <div class="gift-grid">
           <div class="gift-card">
-            <h3>Menú Corto</h3>
-            <p class="gift-schedule">Miércoles a Viernes (13:30 - 15:15)</p>
+            <h3>Petit menú Gastrogaratxe</h3>
+            <p class="gift-schedule">
+              Mié-Jue · mediodía y noche · Vie mediodía (13:30-15:15)
+            </p>
             <div class="gift-item">
               <span>Solo Menú</span>
               <span class="price">40€</span>
@@ -172,8 +174,8 @@ onUnmounted(() => {
           </div>
 
           <div class="gift-card">
-            <h3>Menú Gastro</h3>
-            <p class="gift-schedule">Noches + Sábados (13:30 y 21:00)</p>
+            <h3>Gran menú Gastrogaratxe</h3>
+            <p class="gift-schedule">Mié-Sáb · mediodía y noche</p>
             <div class="gift-item">
               <span>Solo Menú</span>
               <span class="price">75€</span>
@@ -198,20 +200,19 @@ onUnmounted(() => {
       </section>
       <div id="menuSection" class="section menu-section">
         <div class="hmenu-column">
-          <h2 :style="{ color: textColor }">Menú degustación gastro</h2>
+          <h2 :style="{ color: textColor }">Gran menú Gastrogaratxe</h2>
           <p :style="{ color: textColor }">
             - 11 pasos de cocina de autor<br />
-            - miércoles - viernes | <strong>21:00</strong><br />
-            - sábado | <strong>13:30 - 21:00</strong><br />
+            - Mié-Sáb · mediodía y noche<br />
             - 75€ <span style="font-size: 0.5em">(IVA incluido)</span><br /> </p
         ></div>
         <div class="menu-divider" aria-hidden="true"></div>
 
         <div class="hmenu-column">
-          <h2 :style="{ color: textColor }">Menú degustación corto</h2>
+          <h2 :style="{ color: textColor }">Petit menú Gastrogaratxe</h2>
           <p :style="{ color: textColor }">
             - 6 pasos de cocina de autor<br />
-            - miércoles - viernes | <strong>13:30 - 15:15</strong><br />
+            - Mié-Jue · mediodía y noche · Vie mediodía (13:30-15:15)<br />
             - 40€ <span style="font-size: 0.5em">(IVA incluido)</span><br /> </p
         ></div>
       </div>
@@ -475,7 +476,7 @@ onUnmounted(() => {
       border-top: 1px solid rgba(255, 255, 255, 0.15);
       font-size: 1.05rem;
       color: #ffffff;
-
+      overflow: hidden;
       &:first-of-type {
         border-top: none;
         padding-top: 0.5rem;
